@@ -8,9 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame {
+    // Main panel and settings
     private JPanel mainPanel;
     private Dimension mainPanelMinSize = new Dimension(800, 500);
 
+    // Navigation bar, children, and settings
     private JPanel navigationPanel;
     private JButton browseButton;
     private JButton transactionHistoryButton;
@@ -18,6 +20,7 @@ public class MainWindow extends JFrame {
     private JButton calendarButton;
     private JButton logoutButton;
 
+    // Content panel, children, and settings
     private JPanel contentPanel;
     private InquiryPanel inquiryPanel = new InquiryPanel();
 
@@ -29,11 +32,14 @@ public class MainWindow extends JFrame {
         this.setContentPane(mainPanel);
         this.pack();
 
+        // Populate the content panel with all the different panels we plan on using
+        // Using a cardLayout we can then switch between them easily
         contentPanel.add(inquiryPanel, "inquiry");
         contentPanel.add(new JPanel(), "calendar");
         contentPanel.add(new JPanel(), "browse");
         contentPanel.add(new JPanel(), "history");
 
+        // Buttons switch contentPanel between previously added panels
         browseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel,"browse");
