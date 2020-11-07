@@ -1,7 +1,5 @@
 package ContractorProfile;
 
-import sun.tools.jps.Jps;
-
 import javax.swing.*;
 import java.awt.*;
 
