@@ -1,7 +1,11 @@
 package ContractorProfile;
 
+import CustomerProfile.CustomerProfile;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ContractorProfile extends JPanel {
     private JPanel contractorProfile;
@@ -18,6 +22,7 @@ public class ContractorProfile extends JPanel {
     private JLabel ProfileHeader;
     private JLabel temp;
     private JLabel temp2;
+    private ContractorProfileEdit contractorProfileEdit = new ContractorProfileEdit();
 
 
     public ContractorProfile() {
@@ -27,8 +32,16 @@ public class ContractorProfile extends JPanel {
         this.RateButton.setVisible(true);
         this.EditProfile.setVisible(false);
 
-        this.setLayout(new GridLayout());
-        this.add(contractorProfile);
+        this.setLayout(new CardLayout());
+
+        this.add(contractorProfile, "contractorProfile");
+        this.add(contractorProfileEdit, "contractorProfileEdit");
+
+        EditProfile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ((CardLayout) ContractorProfile.this.getLayout()).show(ContractorProfile.this, "contractorProfileEdit");
+            }
+        });
     }
 
     //(amon) If we're viewing our own profile, certain boxes and buttons will be hidden or made visible
