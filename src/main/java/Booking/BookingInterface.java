@@ -3,7 +3,12 @@ package Booking;
 import java.util.Vector;
 
 class BookingAvailability{};
-class UserID{};
+class UserID{
+    public String mName;
+    public UserID(String name){
+        mName = name;
+    }
+};
 
 
 public interface BookingInterface {

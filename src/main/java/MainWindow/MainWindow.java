@@ -3,6 +3,8 @@ package MainWindow;
 import Booking.SchedulePanel;
 import BrowsePanel.BrowsePanel;
 import LoginPanel.LoginPanel;
+import ContractorProfile.ContractorProfile;
+import CustomerProfile.CustomerProfile;
 import Messaging.InquiryPanel;
 import SignupPanel.SignupPanel;
 import sun.rmi.runtime.Log;
@@ -24,13 +26,25 @@ public class MainWindow extends JFrame {
     private JButton inquiriesButton;
     private JButton calendarButton;
     private JButton logoutButton;
+    private JButton profileButton;
 
     // Content panel, children, and settings
+    enum LocalPanelNames {
+        BROWSE,
+        SCHEDULE,
+        INQUIRY,
+        HISTORY,
+        PROFILE_CLIENT,
+        PROFILE_CONTRACTOR
+    }
+
     private JPanel contentPanel;
     private LoginPanel loginPanel = new LoginPanel(this);
     private InquiryPanel inquiryPanel = new InquiryPanel();
     private SchedulePanel schedulePanel = new SchedulePanel();
     private BrowsePanel browsePanel = new BrowsePanel();
+    private CustomerProfile customerProfile = new CustomerProfile();
+    private ContractorProfile contractorProfile = new ContractorProfile();
 
     public MainWindow(String title) {
         super(title);
@@ -43,10 +57,12 @@ public class MainWindow extends JFrame {
         // Populate the content panel with all the different panels we plan on using
         // Using a cardLayout we can then switch between them easily
         contentPanel.add(loginPanel, "login");
-        contentPanel.add(inquiryPanel, "inquiry");
-        contentPanel.add(schedulePanel, "calendar");
-        contentPanel.add(browsePanel, "browse");
-        contentPanel.add(new JPanel(), "history");
+        contentPanel.add(browsePanel, MainWindow.LocalPanelNames.BROWSE.toString());
+        contentPanel.add(schedulePanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
+        contentPanel.add(inquiryPanel, MainWindow.LocalPanelNames.INQUIRY.toString());
+        contentPanel.add(new JPanel(), MainWindow.LocalPanelNames.HISTORY.toString());
+        contentPanel.add(customerProfile, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
+        contentPanel.add(contractorProfile, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
 
         // Home page is login screen
         navigationPanel.setVisible(false);
@@ -55,22 +71,39 @@ public class MainWindow extends JFrame {
         // Buttons switch contentPanel between previously added panels
         browseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel,"browse");
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.BROWSE.toString());
             }
         });
         calendarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel,"calendar");
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
             }
         });
         inquiriesButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel,"inquiry");
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.INQUIRY.toString());
             }
         });
         transactionHistoryButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel,"history");
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.HISTORY.toString());
+            }
+        });
+        profileButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //(amon) I think when the person logs in we should set a bool variable true or false
+                //depending on if they are a customer or contractor, so the right profile can be displayed
+                //and also so the right edit screen is given. I just made one here as placeholder until.
+
+                boolean IsContractor = false;
+                if(IsContractor) {
+                    customerProfile.myprofile(); //called because we clicked "my profile"
+                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
+                }
+                else{
+                    contractorProfile.myprofile(); //called because we clicked "my profile"
+                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
+                }
             }
         });
     }
@@ -81,11 +114,12 @@ public class MainWindow extends JFrame {
         navigationPanel.setVisible(true);
         if(userType.equals("contractor"))
         {
-            ((CardLayout)contentPanel.getLayout()).show(contentPanel,"calendar");
+            browseButton.setVisible(false);
+            ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
         }
         else if(userType.equals("client"))
         {
-            ((CardLayout)contentPanel.getLayout()).show(contentPanel,"browse");
+            ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.BROWSE.toString());
         }
     }
 

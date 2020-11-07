@@ -14,6 +14,12 @@ public class BookingTimeDate extends BookingTime {
 
     // TODO write getters and setters as needed
 
+    @Override
+    public String toString() {
+        // TODO make this good
+        return super.toString() + " on " + mDate.toString();
+    }
+
     public boolean interferesWith(BookingTimeDate otherTimeSlot) {
         // TODO write actual logic
         return false;

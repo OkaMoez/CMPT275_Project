@@ -10,6 +10,7 @@ public class BrowsePanel extends JPanel{
     private JButton searchByLocationButton;
     private JButton searchByRatingsButton;
     private JPanel mainPanel;
+    private JList searchResultsList;
 
     public BrowsePanel() {
         add(mainPanel);

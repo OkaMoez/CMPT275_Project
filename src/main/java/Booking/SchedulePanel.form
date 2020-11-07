@@ -32,38 +32,6 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="ab309" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="What"/>
-                </properties>
-              </component>
-              <component id="7719d" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
-                <constraints>
-                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="1901e" class="javax.swing.JTextArea" binding="textArea3" default-binding="true">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="47db9" class="javax.swing.JTextArea" binding="textArea4" default-binding="true">
-                <constraints>
-                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="5d346" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
@@ -72,13 +40,13 @@
                   <text value="Notes"/>
                 </properties>
               </component>
-              <component id="42a7b" class="javax.swing.JTextArea" binding="textArea5" default-binding="true">
+              <component id="ab309" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <text value="What"/>
+                </properties>
               </component>
               <component id="2c4b9" class="javax.swing.JLabel">
                 <constraints>
@@ -104,10 +72,44 @@
                   <text value="Who"/>
                 </properties>
               </component>
-              <component id="513dd" class="javax.swing.JTextArea" binding="textArea2" default-binding="true">
+              <component id="513dd" class="javax.swing.JTextArea" binding="nameTextArea">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="1901e" class="javax.swing.JTextArea" binding="timeDateTextArea">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="47db9" class="javax.swing.JTextArea" binding="locationTextArea">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="7719d" class="javax.swing.JTextArea" binding="taskTextArea">
+                <constraints>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="42a7b" class="javax.swing.JTextArea" binding="notesTextArea">
+                <constraints>
+                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
                   </grid>
                 </constraints>
                 <properties/>
