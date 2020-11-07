@@ -1,5 +1,6 @@
 package MainWindow;
 
+import Booking.SchedulePanel;
 import LoginPanel.LoginPanel;
 import Messaging.InquiryPanel;
 import SignupPanel.SignupPanel;
@@ -27,6 +28,7 @@ public class MainWindow extends JFrame {
     private JPanel contentPanel;
     private LoginPanel loginPanel = new LoginPanel(this);
     private InquiryPanel inquiryPanel = new InquiryPanel();
+    private SchedulePanel schedulePanel = new SchedulePanel();
 
     public MainWindow(String title) {
         super(title);
@@ -40,7 +42,7 @@ public class MainWindow extends JFrame {
         // Using a cardLayout we can then switch between them easily
         contentPanel.add(loginPanel, "login");
         contentPanel.add(inquiryPanel, "inquiry");
-        contentPanel.add(new JPanel(), "calendar");
+        contentPanel.add(schedulePanel, "calendar");
         contentPanel.add(new JPanel(), "browse");
         contentPanel.add(new JPanel(), "history");
 
