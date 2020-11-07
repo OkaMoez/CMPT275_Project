@@ -1,5 +1,6 @@
 package MainWindow;
 
+import Booking.SchedulePanel;
 import ContractorProfile.ContractorProfile;
 import CustomerProfile.CustomerProfile;
 import Messaging.InquiryPanel;
@@ -24,9 +25,18 @@ public class MainWindow extends JFrame {
     private JButton profileButton;
 
     // Content panel, children, and settings
-    private JPanel contentPanel;
+    enum LocalPanelNames {
+        BROWSE,
+        SCHEDULE,
+        INQUIRY,
+        HISTORY,
+        PROFILE_CLIENT,
+        PROFILE_CONTRACTOR
+    }
 
+    private JPanel contentPanel;
     private InquiryPanel inquiryPanel = new InquiryPanel();
+    private SchedulePanel schedulePanel = new SchedulePanel();
     private CustomerProfile customerProfile = new CustomerProfile();
     private ContractorProfile contractorProfile = new ContractorProfile();
 
@@ -40,32 +50,32 @@ public class MainWindow extends JFrame {
 
         // Populate the content panel with all the different panels we plan on using
         // Using a cardLayout we can then switch between them easily
-        contentPanel.add(inquiryPanel, "inquiry");
-        contentPanel.add(new JPanel(), "calendar");
-        contentPanel.add(new JPanel(), "browse");
-        contentPanel.add(new JPanel(), "history");
-        contentPanel.add(customerProfile, "customerprofile");
-        contentPanel.add(contractorProfile, "contractorprofile");
+        contentPanel.add(new JPanel(), MainWindow.LocalPanelNames.BROWSE.toString());
+        contentPanel.add(schedulePanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
+        contentPanel.add(inquiryPanel, MainWindow.LocalPanelNames.INQUIRY.toString());
+        contentPanel.add(new JPanel(), MainWindow.LocalPanelNames.HISTORY.toString());
+        contentPanel.add(customerProfile, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
+        contentPanel.add(contractorProfile, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
 
         // Buttons switch contentPanel between previously added panels
         browseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel,"browse");
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.BROWSE.toString());
             }
         });
         calendarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel,"calendar");
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
             }
         });
         inquiriesButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel,"inquiry");
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.INQUIRY.toString());
             }
         });
         transactionHistoryButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel,"history");
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.HISTORY.toString());
             }
         });
         profileButton.addActionListener(new ActionListener() {
@@ -77,11 +87,11 @@ public class MainWindow extends JFrame {
                 boolean IsContractor = false;
                 if(IsContractor) {
                     customerProfile.myprofile(); //called because we clicked "my profile"
-                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, "customerprofile");
+                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
                 }
                 else{
                     contractorProfile.myprofile(); //called because we clicked "my profile"
-                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, "contractorprofile");
+                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
                 }
             }
         });
