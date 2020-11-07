@@ -1,6 +1,7 @@
 package MainWindow;
 
-import Booking.SchedulePanel;
+import ContractorProfile.ContractorProfile;
+import CustomerProfile.CustomerProfile;
 import Messaging.InquiryPanel;
 
 import javax.swing.*;
@@ -20,11 +21,14 @@ public class MainWindow extends JFrame {
     private JButton inquiriesButton;
     private JButton calendarButton;
     private JButton logoutButton;
+    private JButton profileButton;
 
     // Content panel, children, and settings
     private JPanel contentPanel;
+
     private InquiryPanel inquiryPanel = new InquiryPanel();
-    private SchedulePanel schedulePanel = new SchedulePanel();
+    private CustomerProfile customerProfile = new CustomerProfile();
+    private ContractorProfile contractorProfile = new ContractorProfile();
 
     public MainWindow(String title) {
         super(title);
@@ -37,9 +41,11 @@ public class MainWindow extends JFrame {
         // Populate the content panel with all the different panels we plan on using
         // Using a cardLayout we can then switch between them easily
         contentPanel.add(inquiryPanel, "inquiry");
-        contentPanel.add(schedulePanel, "calendar");
+        contentPanel.add(new JPanel(), "calendar");
         contentPanel.add(new JPanel(), "browse");
         contentPanel.add(new JPanel(), "history");
+        contentPanel.add(customerProfile, "customerprofile");
+        contentPanel.add(contractorProfile, "contractorprofile");
 
         // Buttons switch contentPanel between previously added panels
         browseButton.addActionListener(new ActionListener() {
@@ -60,6 +66,23 @@ public class MainWindow extends JFrame {
         transactionHistoryButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel,"history");
+            }
+        });
+        profileButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //(amon) I think when the person logs in we should set a bool variable true or false
+                //depending on if they are a customer or contractor, so the right profile can be displayed
+                //and also so the right edit screen is given. I just made one here as placeholder until.
+
+                boolean IsContractor = false;
+                if(IsContractor) {
+                    customerProfile.myprofile(); //called because we clicked "my profile"
+                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, "customerprofile");
+                }
+                else{
+                    contractorProfile.myprofile(); //called because we clicked "my profile"
+                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, "contractorprofile");
+                }
             }
         });
     }
