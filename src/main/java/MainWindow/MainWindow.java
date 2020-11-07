@@ -1,6 +1,7 @@
 package MainWindow;
 
 import Booking.SchedulePanel;
+import BrowsePanel.BrowsePanel;
 import LoginPanel.LoginPanel;
 import Messaging.InquiryPanel;
 import SignupPanel.SignupPanel;
@@ -29,6 +30,7 @@ public class MainWindow extends JFrame {
     private LoginPanel loginPanel = new LoginPanel(this);
     private InquiryPanel inquiryPanel = new InquiryPanel();
     private SchedulePanel schedulePanel = new SchedulePanel();
+    private BrowsePanel browsePanel = new BrowsePanel();
 
     public MainWindow(String title) {
         super(title);
@@ -43,7 +45,7 @@ public class MainWindow extends JFrame {
         contentPanel.add(loginPanel, "login");
         contentPanel.add(inquiryPanel, "inquiry");
         contentPanel.add(schedulePanel, "calendar");
-        contentPanel.add(new JPanel(), "browse");
+        contentPanel.add(browsePanel, "browse");
         contentPanel.add(new JPanel(), "history");
 
         // Home page is login screen
@@ -79,7 +81,7 @@ public class MainWindow extends JFrame {
         navigationPanel.setVisible(true);
         if(userType.equals("contractor"))
         {
-            ((CardLayout)contentPanel.getLayout()).show(contentPanel,"bookings");
+            ((CardLayout)contentPanel.getLayout()).show(contentPanel,"calendar");
         }
         else if(userType.equals("client"))
         {
@@ -92,11 +94,6 @@ public class MainWindow extends JFrame {
     public void successfulSignUp(String userType){
         // using credentials create user and then...
         successfulLogin(userType);
-    }
-
-    // Called when user goes back to login screen from signup screen
-    public void backToLogin(){
-        loginPanel = new LoginPanel(this);
     }
 
     public static void main(String[] args) {
