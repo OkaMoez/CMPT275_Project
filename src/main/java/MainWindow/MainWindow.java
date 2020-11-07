@@ -40,6 +40,7 @@ public class MainWindow extends JFrame {
     private CustomerProfile customerProfile = new CustomerProfile();
     private ContractorProfile contractorProfile = new ContractorProfile();
 
+
     public MainWindow(String title) {
         super(title);
 
@@ -93,8 +94,10 @@ public class MainWindow extends JFrame {
                     contractorProfile.myprofile(); //called because we clicked "my profile"
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
                 }
+
             }
         });
+
     }
 
     public static void main(String[] args) {
