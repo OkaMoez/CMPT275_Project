@@ -2,8 +2,6 @@ package Booking;
 
 import java.util.Vector;
 
-class BookingObject{};
-class BookingTime{};
 class BookingAvailability{};
 class UserID{};
 
