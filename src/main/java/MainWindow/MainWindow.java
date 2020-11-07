@@ -1,5 +1,6 @@
 package MainWindow;
 
+import Booking.SchedulePanel;
 import Messaging.InquiryPanel;
 
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class MainWindow extends JFrame {
     // Content panel, children, and settings
     private JPanel contentPanel;
     private InquiryPanel inquiryPanel = new InquiryPanel();
+    private SchedulePanel schedulePanel = new SchedulePanel();
 
     public MainWindow(String title) {
         super(title);
@@ -35,7 +37,7 @@ public class MainWindow extends JFrame {
         // Populate the content panel with all the different panels we plan on using
         // Using a cardLayout we can then switch between them easily
         contentPanel.add(inquiryPanel, "inquiry");
-        contentPanel.add(new JPanel(), "calendar");
+        contentPanel.add(schedulePanel, "calendar");
         contentPanel.add(new JPanel(), "browse");
         contentPanel.add(new JPanel(), "history");
 
