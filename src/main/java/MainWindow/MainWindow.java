@@ -6,8 +6,10 @@ import LoginPanel.LoginPanel;
 import ContractorProfile.ContractorProfile;
 import CustomerProfile.CustomerProfile;
 import Messaging.InquiryPanel;
-import SignupPanel.SignupPanel;
-import sun.rmi.runtime.Log;
+import Profiles.Client;
+import Profiles.Contractor;
+import Profiles.User;
+import Profiles.UserID;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame {
+    // Current user data
+    private String username;
+    private String password;
+    private String clientOrContractor;
+
+    private User currentUser;
+
+    // (Uchechi) login session timer attribute to be implemented
+
     // Main panel and settings
     private JPanel mainPanel;
     private Dimension mainPanelMinSize = new Dimension(800, 500);
@@ -96,8 +107,7 @@ public class MainWindow extends JFrame {
                 //depending on if they are a customer or contractor, so the right profile can be displayed
                 //and also so the right edit screen is given. I just made one here as placeholder until.
 
-                boolean IsContractor = false;
-                if(IsContractor) {
+                if(clientOrContractor.equals("client")) {
                     customerProfile.myprofile(); //called because we clicked "my profile"
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
                 }
@@ -108,27 +118,44 @@ public class MainWindow extends JFrame {
 
             }
         });
+        logoutButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // end login session and destruct current user
+                currentUser = null;
+                navigationPanel.setVisible(false);
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel,"login");
+            }
+        });
 
     }
 
     // Successful Login
     //          this should take in the login credentials
     public void successfulLogin(String userType){
+        username = loginPanel.getUsername();
+        password = loginPanel.getPassword();
+        clientOrContractor = userType;
         navigationPanel.setVisible(true);
         if(userType.equals("contractor"))
         {
+            currentUser = new Contractor(new UserID(username), password);
             browseButton.setVisible(false);
             ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
         }
         else if(userType.equals("client"))
         {
+            currentUser = new Client(new UserID(username), password);
             ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.BROWSE.toString());
         }
+
+        // Output user name and user type to console just to confirm who is logged in
+        System.out.println(currentUser.getUserID() + " is logged in as a " + currentUser.getUserType());
     }
 
     // Successful Sign Up (does same thing as login)
     //          maybe this should take in the new user credentials
     public void successfulSignUp(String userType){
+        // get username and password for login
         // using credentials create user and then...
         successfulLogin(userType);
     }

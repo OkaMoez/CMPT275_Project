@@ -1,48 +1,49 @@
 package LoginPanel;
 
+import LoginContentPanel.LoginContentPanel;
 import MainWindow.MainWindow;
-import SignupPanel.SignupPanel;
+import SignupContentPanel.SignupContentPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 public class LoginPanel extends JPanel{
     private JPanel loginPanel;
-    private JLabel loginLabel;
-    private JTextField contractorUsernameTextField;
-    private JTextField clientUsernameTextField;
-    private JPasswordField contractorPasswordField;
-    private JPasswordField clientPasswordField;
+
+    // login database to verify login details
+    private HashMap<String, String> loginDatabase;
+
+    // card layout to show login or signup screens
+    private JPanel signUpOrLoginContentPanel;
+    private LoginContentPanel loginContentPanel = new LoginContentPanel();
+    private SignupContentPanel contractorSignupContentPanel = new SignupContentPanel("contractor");
+    private SignupContentPanel clientSignupContentPanel = new SignupContentPanel("client");
+
+    // Content present during login screen
+    private JPanel loginButtonsPanel;
     private JButton contractorLoginButton;
     private JButton clientLoginButton;
-    private JButton showContractorSignUpButton;
-    private JButton showClientSignUpButton;
-    private JLabel contractorLoginLabel;
-    private JLabel contractorUsernameLabel;
-    private JLabel contractorPasswordLabel;
-    private JLabel createAccountLabel;
-    private JLabel clientLoginLabel;
-    private JLabel clientUsernameLabel;
-    private JLabel clientPasswordLabel;
-    private JLabel welcomeLabel;
     private JLabel contractorLoginWarningLabel;
     private JLabel clientLoginWarningLabel;
-    private JPanel signUpOrLoginSelectButtonPanel;
-    private JPanel signUpOrLoginContentPanel;
+    private JButton showContractorSignUpButton;
+    private JButton showClientSignUpButton;
+
+    // Content present during signup screen
+    private JPanel signUpButtonsPanel;
     private JButton signUpButton;
+    private JLabel signUpWarningLabel;
+    private JButton backToLoginButton;
 
-    private JButton backToLoginButton = new JButton("Back to Login");
-
-    private JPanel loginContentPanel;
-    private SignupPanel contractorSignupPanel = new SignupPanel("contractor");
-    private SignupPanel clientSignupPanel = new SignupPanel("client");
     private String userType;
 
     // Login credentials
     private String username;
     private String password;
+    public String getUsername(){return username;}
+    public String getPassword(){return password;}
 
     // Sign up details
     private String signUpUsername;
@@ -52,42 +53,53 @@ public class LoginPanel extends JPanel{
     public LoginPanel(final MainWindow mainWindow) {
 
         add(loginPanel);
-        // Hide login warning labels
-        contractorLoginWarningLabel.setVisible(false);
-        clientLoginWarningLabel.setVisible(false);
 
-        // Hide sign up button
-        signUpButton.setVisible(false);
-        backToLoginButton.setVisible(false);
+        // initialise loginDatabase attribute here
+        loginDatabase = new HashMap<String, String>();
+        loginDatabase.put("Amon", "password1");
+        loginDatabase.put("Brigham", "password2");
+        loginDatabase.put("Uchechi", "password3");
+
         signUpOrLoginContentPanel.setVisible(true);
 
-        // Add login and sign up panels to card
+        //Add login and sign up panels to card
         signUpOrLoginContentPanel.add(loginContentPanel, "login");
-        signUpOrLoginContentPanel.add(clientSignupPanel, "contractorSignup");
-        signUpOrLoginContentPanel.add(clientSignupPanel, "clientSignup");
+        signUpOrLoginContentPanel.add(contractorSignupContentPanel, "contractorSignup");
+        signUpOrLoginContentPanel.add(clientSignupContentPanel, "clientSignup");
 
-
+        // Show login content panel and login buttons panel during startup
         ((CardLayout)signUpOrLoginContentPanel.getLayout()).show(signUpOrLoginContentPanel,"login");
+        signUpButtonsPanel.setVisible(false);
+        loginButtonsPanel.setVisible(true);
 
         // Contractor Login
         contractorLoginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                clientLoginWarningLabel.setVisible(false);
-                contractorLoginWarningLabel.setVisible(false);
+                clientLoginWarningLabel.setText("");
+                contractorLoginWarningLabel.setText("");
                 // Check that username and password are filled
                 userType = "contractor";
-                username = contractorUsernameTextField.getText();
-                password = contractorPasswordField.getPassword().toString();
+                username = loginContentPanel.getContractorUsername();
+                password = loginContentPanel.getContractorPassword();
                 if(username.equals("") ||  password.equals("") )
                 {
                     contractorLoginWarningLabel.setText("Error: Please enter all fields.");
-                    contractorLoginWarningLabel.setVisible(true);
                 }
                 else
                 {
-                    // UNWASIKETEST check that username and password are in database if not set warning label. If so, proceed
+                    // check that username and password are in database if not set warning label. If so, proceed
                     // From main window, swap this panel for the contractor "home page" ie bookings panel
-                    mainWindow.successfulLogin("contractor");
+                    if (loginDatabase.containsKey(username)){
+                        if (loginDatabase.get(username).equals(password)){
+                            mainWindow.successfulLogin("contractor");
+                        }
+                        else{
+                            contractorLoginWarningLabel.setText("Invalid credentials.");
+                        }
+                    }
+                    else{
+                        contractorLoginWarningLabel.setText("User does not exist. Please sign up below.");
+                    }
                 }
             }
         });
@@ -95,22 +107,31 @@ public class LoginPanel extends JPanel{
         // Client Login
         clientLoginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                clientLoginWarningLabel.setVisible(false);
-                contractorLoginWarningLabel.setVisible(false);
+                clientLoginWarningLabel.setText("");
+                contractorLoginWarningLabel.setText("");
                 // Check that username and password are filled
                 userType = "client";
-                username = clientUsernameTextField.getText();
-                password = clientPasswordField.getPassword().toString();
+                username = loginContentPanel.getClientUsername();
+                password = loginContentPanel.getClientPassword();
                 if(username.equals("") || password.equals("") )
                 {
                     clientLoginWarningLabel.setText("Error: Please enter all fields.");
-                    clientLoginWarningLabel.setVisible(true);
                 }
                 else
                 {
-                    // UNWASIKETEST check that username and password are in database if not set warning label. If so, proceed
-                    // From main window, swap this panel for the client "home page"
-                    mainWindow.successfulLogin("client");
+                    // check that username and password are in database if not set warning label. If so, proceed
+                    // From main window, swap this panel for the contractor "home page" ie bookings panel
+                    if (loginDatabase.containsKey(username)){
+                        if (loginDatabase.get(username).equals(password)){
+                            mainWindow.successfulLogin("client");
+                        }
+                        else{
+                            clientLoginWarningLabel.setText("Invalid credentials.");
+                        }
+                    }
+                    else{
+                        clientLoginWarningLabel.setText("User does not exist. Please sign up below.");
+                    }
                 }
             }
         });
@@ -118,33 +139,35 @@ public class LoginPanel extends JPanel{
         // Sign Up Button
         signUpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                signUpWarningLabel.setText("");
                 if(userType.equals("contractor")){
-                    signUpUsername = contractorSignupPanel.getUsername();
-                    signUpName = contractorSignupPanel.getName();
-                    signUpPassword = contractorSignupPanel.getPassword();
+                    signUpUsername = contractorSignupContentPanel.getUsername();
+                    signUpName = contractorSignupContentPanel.getName();
+                    signUpPassword = contractorSignupContentPanel.getPassword();
                 }
                 else if(userType.equals("client")){
-                    signUpUsername = clientSignupPanel.getUsername();
-                    signUpName = clientSignupPanel.getName();
-                    signUpPassword = clientSignupPanel.getPassword();
+                    signUpUsername = clientSignupContentPanel.getUsername();
+                    signUpName = clientSignupContentPanel.getName();
+                    signUpPassword = clientSignupContentPanel.getPassword();
                 }
-                if (signUpUsername.equals("") || signUpName.equals("") || signUpPassword.equals(""))
-                {
-                    // error message
-                    return;
+
+                if (signUpUsername.equals("") || signUpName.equals("") || signUpPassword.equals("")){
+                    signUpWarningLabel.setText("Please enter all fields.");
                 }
-                // pass credentials into this sign up function
-                mainWindow.successfulSignUp(userType);
+                else {
+                    // execute a sign up function
+                    mainWindow.successfulSignUp(userType);
+                }
             }
         });
 
         // Show Contractor Sign Up Button
         showContractorSignUpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                signUpWarningLabel.setText("");
                 userType = "contractor";
-                signUpButton.setVisible(true);
-                backToLoginButton.setVisible(true);
-                signUpOrLoginSelectButtonPanel.setVisible(false);
+                signUpButtonsPanel.setVisible(true);
+                loginButtonsPanel.setVisible(false);
                 ((CardLayout)signUpOrLoginContentPanel.getLayout()).show(signUpOrLoginContentPanel,"contractorSignup");
             }
         });
@@ -152,10 +175,10 @@ public class LoginPanel extends JPanel{
         // Show Client Sign Up Button
         showClientSignUpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                signUpWarningLabel.setText("");
                 userType = "client";
-                signUpButton.setVisible(true);
-                backToLoginButton.setVisible(true);
-                signUpOrLoginSelectButtonPanel.setVisible(false);
+                signUpButtonsPanel.setVisible(true);
+                loginButtonsPanel.setVisible(false);
                 ((CardLayout)signUpOrLoginContentPanel.getLayout()).show(signUpOrLoginContentPanel,"clientSignup");
             }
         });
@@ -163,9 +186,10 @@ public class LoginPanel extends JPanel{
         // Back to Login Button
         backToLoginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                signUpButton.setVisible(false);
-                backToLoginButton.setVisible(false);
-                signUpOrLoginSelectButtonPanel.setVisible(true);
+                contractorLoginWarningLabel.setText("");
+                clientLoginWarningLabel.setText("");
+                signUpButtonsPanel.setVisible(false);
+                loginButtonsPanel.setVisible(true);
                 ((CardLayout)signUpOrLoginContentPanel.getLayout()).show(signUpOrLoginContentPanel,"login");
             }
         });

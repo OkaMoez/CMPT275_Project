@@ -9,6 +9,8 @@ public class UserID {
         mUserID = userID;
     }
 
+    public String getUserID() {return mUserID;}
+
     // Allow easy comparisons of user ids
     @Override
     public boolean equals(Object o) {

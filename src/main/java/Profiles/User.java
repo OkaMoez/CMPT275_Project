@@ -14,9 +14,12 @@ public abstract class User {
         this(new UserID(userIdString), password);
     }
 
-    UserID getUserID() {
-        return mUserID;
+    // Get userID as a string
+    public String getUserID() {
+        return mUserID.getUserID();
     }
+
+    abstract public String getUserType();
 
     private void setPassword(String password) {
         mPassword = password;
