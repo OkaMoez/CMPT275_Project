@@ -1,14 +1,9 @@
-package SignupPanel;
-
-import LoginPanel.LoginPanel;
-import MainWindow.MainWindow;
+package SignupContentPanel;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.management.ManagementFactory;
 
-public class SignupPanel extends JPanel{
+public class SignupContentPanel extends JPanel{
+    private JPanel mainPanel;
     private JLabel signUpLabel;
     private JTextField selectUsernameTextField;
     private JTextField enterNameTextField;
@@ -19,7 +14,8 @@ public class SignupPanel extends JPanel{
     private JPasswordField enterPasswordField;
     private JPasswordField confirmPasswordField;
 
-    public SignupPanel(final String userType) {
+    public SignupContentPanel(final String userType) {
+        add(mainPanel);
         // Set labels according to user type
         signUpLabel.setText("Welcome to the " + userType + " sign up");
         if(userType.equals("contractor")) {
@@ -39,6 +35,6 @@ public class SignupPanel extends JPanel{
     }
 
     public String getPassword() {
-        return (enterPasswordField.getPassword().toString());
+        return ( new String(enterPasswordField.getPassword()));
     }
 }
