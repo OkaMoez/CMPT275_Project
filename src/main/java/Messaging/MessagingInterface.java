@@ -1,9 +1,11 @@
 package Messaging;
 
-class ConversationID{};
-class InquiryMessage{};
+import Users.UserID;
+
+import java.util.Vector;
 
 public interface MessagingInterface {
-    void getMessageHistory(ConversationID conversation);
-    void sendMessage(ConversationID conversation, InquiryMessage message);
+    Vector<ConversationID> getConversationList(UserID currentUser);
+    Vector<String> getConversationHistory(ConversationID conversationID);
+    void sendMessage(ConversationID conversationID, ChatMessage message);
 }
