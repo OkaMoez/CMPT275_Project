@@ -1,17 +1,15 @@
 package MainWindow;
 
 import Booking.SchedulePanel;
-import BrowsePanel.BrowsePanel;
-import LoginPanel.LoginPanel;
-import ContractorProfile.ContractorProfile;
-import CustomerProfile.CustomerProfile;
-import CustomerProfile.CustomerProfileContainer;
-import ContractorProfile.ContractorProfileContainer;
-import Messaging.InquiryPanel;
-import Profiles.Client;
-import Profiles.Contractor;
-import Profiles.User;
-import Profiles.UserID;
+import Browse.BrowsePanel;
+import Login.Panel.LoginPanel;
+import ProfilePages.Customer.CustomerProfileContainer;
+import ProfilePages.Contractor.ContractorProfileContainer;
+import Messaging.MessagingPanel;
+import Users.Client;
+import Users.Contractor;
+import Users.User;
+import Users.UserID;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +34,7 @@ public class MainWindow extends JFrame {
     private JPanel navigationPanel;
     private JButton browseButton;
     private JButton transactionHistoryButton;
-    private JButton inquiriesButton;
+    private JButton messagingButton;
     private JButton calendarButton;
     private JButton logoutButton;
     private JButton profileButton;
@@ -46,7 +44,7 @@ public class MainWindow extends JFrame {
     enum LocalPanelNames {
         BROWSE,
         SCHEDULE,
-        INQUIRY,
+        MESSAGING,
         HISTORY,
         PROFILE_CLIENT,
         PROFILE_CONTRACTOR
@@ -54,7 +52,7 @@ public class MainWindow extends JFrame {
 
     private JPanel contentPanel;
     private LoginPanel loginPanel = new LoginPanel(this);
-    private InquiryPanel inquiryPanel = new InquiryPanel();
+    private MessagingPanel messagingPanel = new MessagingPanel(this);
     private SchedulePanel schedulePanel = new SchedulePanel();
     private BrowsePanel browsePanel = new BrowsePanel();
     private CustomerProfileContainer customerProfileContainer = new CustomerProfileContainer();
@@ -74,7 +72,7 @@ public class MainWindow extends JFrame {
         contentPanel.add(loginPanel, "login");
         contentPanel.add(browsePanel, MainWindow.LocalPanelNames.BROWSE.toString());
         contentPanel.add(schedulePanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
-        contentPanel.add(inquiryPanel, MainWindow.LocalPanelNames.INQUIRY.toString());
+        contentPanel.add(messagingPanel, MainWindow.LocalPanelNames.MESSAGING.toString());
         contentPanel.add(new JPanel(), MainWindow.LocalPanelNames.HISTORY.toString());
         contentPanel.add(customerProfileContainer, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
         contentPanel.add(contractorProfileContainer, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
@@ -94,9 +92,9 @@ public class MainWindow extends JFrame {
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
             }
         });
-        inquiriesButton.addActionListener(new ActionListener() {
+        messagingButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.INQUIRY.toString());
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.MESSAGING.toString());
             }
         });
         transactionHistoryButton.addActionListener(new ActionListener() {
@@ -165,6 +163,10 @@ public class MainWindow extends JFrame {
         // get username and password for login
         // using credentials create user and then...
         successfulLogin(userType);
+    }
+
+    public User getCurrentUser() {
+        return this.currentUser;
     }
 
     public static void main(String[] args) {
