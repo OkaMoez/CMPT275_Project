@@ -5,6 +5,8 @@ import BrowsePanel.BrowsePanel;
 import LoginPanel.LoginPanel;
 import ContractorProfile.ContractorProfile;
 import CustomerProfile.CustomerProfile;
+import CustomerProfile.CustomerProfileContainer;
+import ContractorProfile.ContractorProfileContainer;
 import Messaging.InquiryPanel;
 import SignupPanel.SignupPanel;
 import sun.rmi.runtime.Log;
@@ -27,7 +29,8 @@ public class MainWindow extends JFrame {
     private JButton calendarButton;
     private JButton logoutButton;
     private JButton profileButton;
-
+    static public boolean myProfile = true;
+    static boolean IsContractor = true;
     // Content panel, children, and settings
     enum LocalPanelNames {
         BROWSE,
@@ -43,8 +46,8 @@ public class MainWindow extends JFrame {
     private InquiryPanel inquiryPanel = new InquiryPanel();
     private SchedulePanel schedulePanel = new SchedulePanel();
     private BrowsePanel browsePanel = new BrowsePanel();
-    private CustomerProfile customerProfile = new CustomerProfile();
-    private ContractorProfile contractorProfile = new ContractorProfile();
+    private CustomerProfileContainer customerProfileContainer = new CustomerProfileContainer();
+    private ContractorProfileContainer contractorProfileContainer = new ContractorProfileContainer();
 
 
     public MainWindow(String title) {
@@ -62,8 +65,8 @@ public class MainWindow extends JFrame {
         contentPanel.add(schedulePanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
         contentPanel.add(inquiryPanel, MainWindow.LocalPanelNames.INQUIRY.toString());
         contentPanel.add(new JPanel(), MainWindow.LocalPanelNames.HISTORY.toString());
-        contentPanel.add(customerProfile, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
-        contentPanel.add(contractorProfile, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
+        contentPanel.add(customerProfileContainer, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
+        contentPanel.add(contractorProfileContainer, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
 
         // Home page is login screen
         navigationPanel.setVisible(false);
@@ -96,13 +99,14 @@ public class MainWindow extends JFrame {
                 //depending on if they are a customer or contractor, so the right profile can be displayed
                 //and also so the right edit screen is given. I just made one here as placeholder until.
 
-                boolean IsContractor = false;
-                if(IsContractor) {
-                    customerProfile.myprofile(); //called because we clicked "my profile"
+
+
+                if(!IsContractor) {
+                    //CustomerProfile.myprofile(); //called because we clicked "my profile"
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
                 }
                 else{
-                    contractorProfile.myprofile(); //called because we clicked "my profile"
+                    //contractorProfile.myprofile(); //called because we clicked "my profile"
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
                 }
 

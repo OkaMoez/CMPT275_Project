@@ -14,13 +14,12 @@ public class CustomerProfileEdit extends JPanel{
 
     public CustomerProfileEdit() {
 
-
-
-        //this.setLayout(new GridLayout());
         this.setLayout(new CardLayout());
         this.add(customerProfileEdit, "customerProfileEdit");
+        saveChanges.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
 
-
-
+            }
+        });
     }
 }

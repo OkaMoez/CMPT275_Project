@@ -2,9 +2,10 @@ package ContractorProfile;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ContractorProfileEdit extends JPanel{
-    private JButton backButton;
     private JButton saveChanges;
     private JLabel EditHeader;
     private JPanel contractorProfileEdit;
@@ -15,6 +16,11 @@ public class ContractorProfileEdit extends JPanel{
         //this.setLayout(new GridLayout());
         this.setLayout(new CardLayout());
 
-        this.add(contractorProfileEdit, "customerProfileEdit");
+        this.add(contractorProfileEdit, "contractorProfileEdit");
+        saveChanges.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 }
