@@ -3,12 +3,15 @@ package Profiles;
 public class Client extends User{
     private String mName;
 
-    public Client(UserID userID, String password, String name) {
+    public Client(UserID userID, String password) {
         super(userID, password);
-        mName = name;
+        // initialise Name by querying database with userid and password
+        // mName = name;
     }
 
     public String getName() {
         return mName;
     }
+
+    public String getUserType() { return "client";}
 }
