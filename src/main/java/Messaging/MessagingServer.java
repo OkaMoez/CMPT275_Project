@@ -2,6 +2,7 @@ package Messaging;
 
 import Users.UserID;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
@@ -14,10 +15,11 @@ public class MessagingServer implements MessagingInterface{
     static UserID placeholderUser6 = new UserID("Bob the Builder");
     static UserID placeholderUser7 = new UserID("Gordon Ramsey");
 
-    static Map<ConversationID, Vector<String>> placeholderChats;
+    static HashMap<ConversationID, Vector<String>> placeholderChats;
 
 
     public MessagingServer() {
+        placeholderChats = new HashMap<ConversationID, Vector<String>>();
     }
 
     @Override
