@@ -84,26 +84,33 @@ public class MainWindow extends JFrame {
         // Buttons switch contentPanel between previously added panels
         browseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // TODO: (brigham) move this default button setting code into a helper function
+                MainWindow.this.getRootPane().setDefaultButton(null);
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.BROWSE.toString());
             }
         });
         calendarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                MainWindow.this.getRootPane().setDefaultButton(null);
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
             }
         });
         messagingButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                messagingPanel.pageSelected();
+                MainWindow.this.getRootPane().setDefaultButton(messagingPanel.getDefaultButton());
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.MESSAGING.toString());
             }
         });
         transactionHistoryButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                MainWindow.this.getRootPane().setDefaultButton(null);
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.HISTORY.toString());
             }
         });
         profileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                MainWindow.this.getRootPane().setDefaultButton(null);
                 //(amon) I think when the person logs in we should set a bool variable true or false
                 //depending on if they are a customer or contractor, so the right profile can be displayed
                 //and also so the right edit screen is given. I just made one here as placeholder until.
@@ -167,6 +174,11 @@ public class MainWindow extends JFrame {
 
     public User getCurrentUser() {
         return this.currentUser;
+    }
+
+    public void setEnterKeyAction(JButton button) {
+        // Pass in null or a button to set what the enter/return key does
+        this.getRootPane().setDefaultButton(button);
     }
 
     public static void main(String[] args) {
