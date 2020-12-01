@@ -115,10 +115,6 @@ public class MainWindow extends JFrame {
                 //depending on if they are a customer or contractor, so the right profile can be displayed
                 //and also so the right edit screen is given. I just made one here as placeholder until.
 
-
-
-                if(!IsContractor) {
-                    //CustomerProfile.myprofile(); //called because we clicked "my profile"
                 if(clientOrContractor.equals("client")) {
                     //customerProfile.myprofile(); //called because we clicked "my profile"
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
@@ -128,7 +124,7 @@ public class MainWindow extends JFrame {
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
                 }
 
-            }}
+            }
         });
         logoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
