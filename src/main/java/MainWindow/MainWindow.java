@@ -157,7 +157,7 @@ public class MainWindow extends JFrame {
         }
 
         // Output user name and user type to console just to confirm who is logged in
-        System.out.println(currentUser.getUserID() + " is logged in as a " + currentUser.getUserType());
+        System.out.println(currentUser.getUserID().toString() + " is logged in as a " + currentUser.getUserType());
     }
 
     // Successful Sign Up (does same thing as login)

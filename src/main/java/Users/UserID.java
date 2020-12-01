@@ -9,7 +9,10 @@ public class UserID {
         this.userID = userID;
     }
 
-    public String getUserID() {return userID;}
+    @Override
+    public String toString() {
+        return userID;
+    }
 
     // Allow easy comparisons of user ids
     @Override

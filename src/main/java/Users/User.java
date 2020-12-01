@@ -18,9 +18,6 @@ public abstract class User {
     public UserID getUserID() {
         return userID;
     }
-    public String getUserIDString() {
-        return userID.getUserID();
-    }
 
     abstract public String getUserType();
 

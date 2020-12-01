@@ -15,7 +15,7 @@ public class ConversationID {
         return conversationOwner;
     }
 
-    public UserID getOtherUser() {
+    public UserID getOtherUserID() {
         return otherUser;
     }
 }

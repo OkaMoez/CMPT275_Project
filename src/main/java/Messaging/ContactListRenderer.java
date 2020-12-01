@@ -8,7 +8,7 @@ public class ContactListRenderer extends DefaultListCellRenderer {
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
         ConversationID conversationID = (ConversationID)value;
-        setText(conversationID.getOtherUser().getUserID());
+        setText(conversationID.getOtherUserID().toString());
 
         return this;
     }

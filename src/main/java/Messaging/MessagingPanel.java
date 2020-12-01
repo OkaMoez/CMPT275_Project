@@ -82,7 +82,7 @@ public class MessagingPanel extends JPanel{
                     }
                     // Otherwise, clear old messages and get new ones from the server
                     currentConversation = conversationID;
-                    messageLabel.setText(currentConversation.getOtherUser().getUserID());
+                    messageLabel.setText(currentConversation.getOtherUserID().toString());
                     messagePane.setText(null);
                     Vector<String> chatHistory = messagingServer.getConversationHistory(conversationID);
 
