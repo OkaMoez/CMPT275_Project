@@ -42,6 +42,7 @@ public class MainWindow extends JFrame {
     static boolean IsContractor = true;
     // Content panel, children, and settings
     enum LocalPanelNames {
+        LOGIN,
         BROWSE,
         SCHEDULE,
         MESSAGING,
@@ -69,43 +70,43 @@ public class MainWindow extends JFrame {
 
         // Populate the content panel with all the different panels we plan on using
         // Using a cardLayout we can then switch between them easily
-        contentPanel.add(loginPanel, "login");
-        contentPanel.add(browsePanel, MainWindow.LocalPanelNames.BROWSE.toString());
-        contentPanel.add(schedulePanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
-        contentPanel.add(messagingPanel, MainWindow.LocalPanelNames.MESSAGING.toString());
-        contentPanel.add(new JPanel(), MainWindow.LocalPanelNames.HISTORY.toString());
-        contentPanel.add(customerProfileContainer, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
-        contentPanel.add(contractorProfileContainer, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
+        contentPanel.add(loginPanel, LocalPanelNames.LOGIN.toString());
+        contentPanel.add(browsePanel, LocalPanelNames.BROWSE.toString());
+        contentPanel.add(schedulePanel, LocalPanelNames.SCHEDULE.toString());
+        contentPanel.add(messagingPanel, LocalPanelNames.MESSAGING.toString());
+        contentPanel.add(new JPanel(), LocalPanelNames.HISTORY.toString());
+        contentPanel.add(customerProfileContainer, LocalPanelNames.PROFILE_CLIENT.toString());
+        contentPanel.add(contractorProfileContainer, LocalPanelNames.PROFILE_CONTRACTOR.toString());
 
         // Home page is login screen
         navigationPanel.setVisible(false);
-        ((CardLayout)contentPanel.getLayout()).show(contentPanel,"login");
+        ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.LOGIN.toString());
 
         // Buttons switch contentPanel between previously added panels
         browseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // TODO: (brigham) move this default button setting code into a helper function
                 MainWindow.this.getRootPane().setDefaultButton(null);
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.BROWSE.toString());
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.BROWSE.toString());
             }
         });
         calendarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 MainWindow.this.getRootPane().setDefaultButton(null);
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.SCHEDULE.toString());
             }
         });
         messagingButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 messagingPanel.pageSelected();
                 MainWindow.this.getRootPane().setDefaultButton(messagingPanel.getDefaultButton());
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.MESSAGING.toString());
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.MESSAGING.toString());
             }
         });
         transactionHistoryButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 MainWindow.this.getRootPane().setDefaultButton(null);
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.HISTORY.toString());
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.HISTORY.toString());
             }
         });
         profileButton.addActionListener(new ActionListener() {
@@ -117,11 +118,11 @@ public class MainWindow extends JFrame {
 
                 if(clientOrContractor.equals("client")) {
                     //customerProfile.myprofile(); //called because we clicked "my profile"
-                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CLIENT.toString());
+                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, LocalPanelNames.PROFILE_CLIENT.toString());
                 }
                 else{
                     //contractorProfile.myprofile(); //called because we clicked "my profile"
-                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.PROFILE_CONTRACTOR.toString());
+                    ((CardLayout) contentPanel.getLayout()).show(contentPanel, LocalPanelNames.PROFILE_CONTRACTOR.toString());
                 }
 
             }
@@ -131,7 +132,7 @@ public class MainWindow extends JFrame {
                 // end login session and destruct current user
                 currentUser = null;
                 navigationPanel.setVisible(false);
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel,"login");
+                ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.LOGIN.toString());
             }
         });
 
@@ -148,12 +149,12 @@ public class MainWindow extends JFrame {
         {
             currentUser = new Contractor(new UserID(username), password);
             browseButton.setVisible(false);
-            ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.SCHEDULE.toString());
+            ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.SCHEDULE.toString());
         }
         else if(userType.equals("client"))
         {
             currentUser = new Client(new UserID(username), password);
-            ((CardLayout)contentPanel.getLayout()).show(contentPanel, MainWindow.LocalPanelNames.BROWSE.toString());
+            ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.BROWSE.toString());
         }
 
         // Output user name and user type to console just to confirm who is logged in
