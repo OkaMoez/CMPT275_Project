@@ -2,8 +2,6 @@ package Booking;
 
 import Booking.TimeDate.BookingTimeDate;
 
-import javax.swing.*;
-
 public class BookingObject {
     private UserID mClientId;
     private UserID mContractorId;

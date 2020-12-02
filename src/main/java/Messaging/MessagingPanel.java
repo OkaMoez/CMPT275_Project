@@ -1,7 +1,6 @@
 package Messaging;
 
 import MainWindow.MainWindow;
-import Server.MessagingServer;
 import Server.MessagingServerInterface;
 
 import javax.swing.*;

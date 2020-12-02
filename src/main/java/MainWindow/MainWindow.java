@@ -7,8 +7,6 @@ import ProfilePages.Customer.CustomerProfileContainer;
 import ProfilePages.Contractor.ContractorProfileContainer;
 import Messaging.MessagingPanel;
 import Server.ServerConnection;
-import Users.Client;
-import Users.Contractor;
 import Users.User;
 import Users.UserID;
 
