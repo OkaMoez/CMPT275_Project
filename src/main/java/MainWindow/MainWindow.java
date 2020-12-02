@@ -85,33 +85,32 @@ public class MainWindow extends JFrame {
         // Buttons switch contentPanel between previously added panels
         browseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // TODO: (brigham) move this default button setting code into a helper function
-                MainWindow.this.getRootPane().setDefaultButton(null);
+                setEnterKeyAction(null);
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.BROWSE.toString());
             }
         });
         calendarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                MainWindow.this.getRootPane().setDefaultButton(null);
+                setEnterKeyAction(null);
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.SCHEDULE.toString());
             }
         });
         messagingButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 messagingPanel.pageSelected();
-                MainWindow.this.getRootPane().setDefaultButton(messagingPanel.getDefaultButton());
+                setEnterKeyAction(messagingPanel.getDefaultButton());
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.MESSAGING.toString());
             }
         });
         transactionHistoryButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                MainWindow.this.getRootPane().setDefaultButton(null);
+                setEnterKeyAction(null);
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.HISTORY.toString());
             }
         });
         profileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                MainWindow.this.getRootPane().setDefaultButton(null);
+                setEnterKeyAction(null);
                 //(amon) I think when the person logs in we should set a bool variable true or false
                 //depending on if they are a customer or contractor, so the right profile can be displayed
                 //and also so the right edit screen is given. I just made one here as placeholder until.
@@ -129,6 +128,7 @@ public class MainWindow extends JFrame {
         });
         logoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                setEnterKeyAction(null);
                 // end login session and destruct current user
                 currentUser = null;
                 navigationPanel.setVisible(false);
