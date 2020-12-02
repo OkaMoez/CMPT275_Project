@@ -3,6 +3,8 @@ package Login.Panel;
 import Login.ContentPanel.LoginContentPanel;
 import MainWindow.MainWindow;
 import Login.SignupContentPanel.SignupContentPanel;
+import Server.UserCredentialServerInterface;
+import Users.UserID;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,16 +52,12 @@ public class LoginPanel extends JPanel{
     private String signUpName;
     private String signUpPassword;
 
+    UserCredentialServerInterface loginServer;
+
     public LoginPanel(final MainWindow mainWindow) {
+        loginServer = mainWindow.getServerConnection();
 
         add(loginPanel);
-
-        // initialise loginDatabase attribute here
-        loginDatabase = new HashMap<String, String>();
-        loginDatabase.put("Amon", "password1");
-        loginDatabase.put("Brigham", "password2");
-        loginDatabase.put("Uchechi", "password3");
-        loginDatabase.put("user", "pass");
 
         signUpOrLoginContentPanel.setVisible(true);
 
@@ -90,17 +88,17 @@ public class LoginPanel extends JPanel{
                 {
                     // check that username and password are in database if not set warning label. If so, proceed
                     // From main window, swap this panel for the contractor "home page" ie bookings panel
-                    if (loginDatabase.containsKey(username)){
-                        if (loginDatabase.get(username).equals(password)){
-                            mainWindow.successfulLogin("contractor");
-                        }
-                        else{
-                            contractorLoginWarningLabel.setText("Invalid credentials.");
-                        }
-                    }
-                    else{
+                    UserCredentialServerInterface.LoginResult loginResult = loginServer.tryLoginCredentials(new UserID(username), password);
+                    if (loginResult.equals(UserCredentialServerInterface.LoginResult.BAD_USERNAME)){
                         contractorLoginWarningLabel.setText("User does not exist. Please sign up below.");
+                        return;
                     }
+                    if (loginResult.equals(UserCredentialServerInterface.LoginResult.BAD_PASSWORD)){
+                        contractorLoginWarningLabel.setText("Invalid credentials.");
+                        return;
+                    }
+
+                    mainWindow.successfulLogin("contractor");
                 }
             }
         });
@@ -122,17 +120,17 @@ public class LoginPanel extends JPanel{
                 {
                     // check that username and password are in database if not set warning label. If so, proceed
                     // From main window, swap this panel for the contractor "home page" ie bookings panel
-                    if (loginDatabase.containsKey(username)){
-                        if (loginDatabase.get(username).equals(password)){
-                            mainWindow.successfulLogin("client");
-                        }
-                        else{
-                            clientLoginWarningLabel.setText("Invalid credentials.");
-                        }
-                    }
-                    else{
+                    UserCredentialServerInterface.LoginResult loginResult = loginServer.tryLoginCredentials(new UserID(username), password);
+                    if (loginResult.equals(UserCredentialServerInterface.LoginResult.BAD_USERNAME)){
                         clientLoginWarningLabel.setText("User does not exist. Please sign up below.");
+                        return;
                     }
+                    if (loginResult.equals(UserCredentialServerInterface.LoginResult.BAD_PASSWORD)){
+                        clientLoginWarningLabel.setText("Invalid credentials.");
+                        return;
+                    }
+
+                    mainWindow.successfulLogin("client");
                 }
             }
         });

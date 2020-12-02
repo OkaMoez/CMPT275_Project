@@ -1,24 +1,33 @@
-package Messaging;
+package Server;
 
+import Messaging.ChatMessage;
+import Messaging.ConversationID;
 import Users.UserID;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
-public class MessagingServer implements MessagingInterface{
-    static UserID placeholderUser1 = new UserID("user");
-    static UserID placeholderUser2 = new UserID("Amon");
-    static UserID placeholderUser3 = new UserID("Brigham");
-    static UserID placeholderUser4 = new UserID("Uchechi");
-    static UserID placeholderUser5 = new UserID("Bob Ross");
-    static UserID placeholderUser6 = new UserID("Bob the Builder");
-    static UserID placeholderUser7 = new UserID("Gordon Ramsey");
+public class MessagingServer implements MessagingServerInterface {
+    private UserID placeholderUser1;
+    private UserID placeholderUser2;
+    private UserID placeholderUser3;
+    private UserID placeholderUser4;
+    private UserID placeholderUser5;
+    private UserID placeholderUser6;
+    private UserID placeholderUser7;
 
-    static HashMap<ConversationID, Vector<String>> placeholderChats;
+    private HashMap<ConversationID, Vector<String>> placeholderChats;
 
 
     public MessagingServer() {
+        placeholderUser1 = new UserID("user");
+        placeholderUser2 = new UserID("Amon");
+        placeholderUser3 = new UserID("Brigham");
+        placeholderUser4 = new UserID("Uchechi");
+        placeholderUser5 = new UserID("Bob Ross");
+        placeholderUser6 = new UserID("Bob the Builder");
+        placeholderUser7 = new UserID("Gordon Ramsey");
+
         placeholderChats = new HashMap<ConversationID, Vector<String>>();
     }
 

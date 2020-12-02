@@ -1,0 +1,26 @@
+package Server;
+
+import Users.User;
+import Users.UserID;
+
+public interface UserCredentialServerInterface {
+    enum LoginResult {
+        SUCCESS,
+        BAD_USERNAME,
+        BAD_PASSWORD
+    }
+    LoginResult tryLoginCredentials(UserID userID, String password);
+    User getUserFromCredentials(UserID userID, String password);
+
+    User createNewAccount();
+    enum UniqueUserInfoField {
+        USERNAME,
+        BUSINESS_NAME
+    }
+    boolean isFieldUnique(UniqueUserInfoField field, String name);
+
+    boolean updateClientName();
+    boolean updateBusinessName();
+    boolean updateProfilePicture();
+    boolean updateAddress();
+}

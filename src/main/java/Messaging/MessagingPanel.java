@@ -1,6 +1,8 @@
 package Messaging;
 
 import MainWindow.MainWindow;
+import Server.MessagingServer;
+import Server.MessagingServerInterface;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -35,7 +37,7 @@ public class MessagingPanel extends JPanel{
     private JButton sendMessageButton;
 
     // temp?
-    MessagingServer messagingServer;
+    MessagingServerInterface messagingServer;
 
     public MessagingPanel(MainWindow mainWindow) {
         // Keep a reference to the owner object
@@ -50,7 +52,7 @@ public class MessagingPanel extends JPanel{
         contactListLabel.setText("Chat History");
 
         // fill placeholders
-        messagingServer = new MessagingServer();
+        messagingServer = mainWindow.getServerConnection();
         
         sendMessageButton.addActionListener(new ActionListener() {
             @Override

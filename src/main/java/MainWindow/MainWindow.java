@@ -6,6 +6,7 @@ import Login.Panel.LoginPanel;
 import ProfilePages.Customer.CustomerProfileContainer;
 import ProfilePages.Contractor.ContractorProfileContainer;
 import Messaging.MessagingPanel;
+import Server.ServerConnection;
 import Users.Client;
 import Users.Contractor;
 import Users.User;
@@ -17,11 +18,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame {
+    // References to databases/servers
+    private ServerConnection serverConnection = new ServerConnection();
+
     // Current user data
     private String username;
     private String password;
     private String clientOrContractor;
-
+    static boolean IsContractor = true;
     private User currentUser;
 
     // (Uchechi) login session timer attribute to be implemented
@@ -39,7 +43,7 @@ public class MainWindow extends JFrame {
     private JButton logoutButton;
     private JButton profileButton;
     static public boolean myProfile = true;
-    static boolean IsContractor = true;
+
     // Content panel, children, and settings
     enum LocalPanelNames {
         LOGIN,
@@ -50,7 +54,6 @@ public class MainWindow extends JFrame {
         PROFILE_CLIENT,
         PROFILE_CONTRACTOR
     }
-
     private JPanel contentPanel;
     private LoginPanel loginPanel = new LoginPanel(this);
     private MessagingPanel messagingPanel = new MessagingPanel(this);
@@ -67,6 +70,7 @@ public class MainWindow extends JFrame {
         this.setMinimumSize(mainPanelMinSize);
         this.setContentPane(mainPanel);
         this.pack();
+
 
         // Populate the content panel with all the different panels we plan on using
         // Using a cardLayout we can then switch between them easily
@@ -147,13 +151,13 @@ public class MainWindow extends JFrame {
         navigationPanel.setVisible(true);
         if(userType.equals("contractor"))
         {
-            currentUser = new Contractor(new UserID(username), password);
+            currentUser = serverConnection.getUserFromCredentials(new UserID(username), password);
             browseButton.setVisible(false);
             ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.SCHEDULE.toString());
         }
         else if(userType.equals("client"))
         {
-            currentUser = new Client(new UserID(username), password);
+            currentUser = serverConnection.getUserFromCredentials(new UserID(username), password);
             ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.BROWSE.toString());
         }
 
@@ -171,6 +175,10 @@ public class MainWindow extends JFrame {
 
     public User getCurrentUser() {
         return this.currentUser;
+    }
+
+    public ServerConnection getServerConnection() {
+        return serverConnection;
     }
 
     public void setEnterKeyAction(JButton button) {
