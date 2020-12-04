@@ -8,7 +8,13 @@ import java.awt.event.ActionListener;
 public class ContractorProfileEdit extends JPanel{
     private JButton saveChanges;
     private JLabel EditHeader;
+    private JLabel name;
     private JPanel contractorProfileEdit;
+    private JLabel businessName;
+    private JLabel contactNumber;
+    private JTextField nameBox;
+    private JTextField businessNameBox;
+    private JTextField contactNumberBox;
 
     public ContractorProfileEdit() {
 

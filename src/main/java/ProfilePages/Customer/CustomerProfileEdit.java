@@ -10,6 +10,11 @@ public class CustomerProfileEdit extends JPanel{
     private JPanel customerProfileEdit;
     private JButton backButton;
     private JButton saveChanges;
+    private JLabel name;
+    private JLabel address;
+    private JTextField contactnumberBox;
+    private JTextField nameBox;
+    private JTextField addressBox;
 
 
     public CustomerProfileEdit() {
