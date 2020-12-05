@@ -1,13 +1,14 @@
 package Server;
 
-import Users.Client;
-import Users.Contractor;
-import Users.User;
-import Users.UserID;
+import Users.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class UserCredentialsServer implements UserCredentialServerInterface {
+    private Client tempClient;
+    private Contractor tempContractor;
+    private String[] userString = new String[10];
     private Client placeholderClient1;
     private Client placeholderClient2;
     private Client placeholderClient3;
@@ -15,8 +16,27 @@ public class UserCredentialsServer implements UserCredentialServerInterface {
     private Contractor placeholderContractor2;
     private Contractor placeholderContractor3;
     private HashMap<UserID, User> placeholderUserMap;
+    private CsvSearch csvSearch = new CsvSearch();
 
-    public UserCredentialsServer() {
+    public UserCredentialsServer() throws IOException {
+        //csvSearch.checkForUser()
+        placeholderUserMap = new HashMap<UserID, User>();
+
+        while(!CsvSearch.end){
+
+              userString =csvSearch.sendUser();
+                //System.out.println(userString[1]);
+             if("client".equals(userString[1])){
+
+                tempClient = new Client(new UserID(userString[0]), userString[2]);
+                placeholderUserMap.put(tempClient.getUserID(),tempClient);
+            }
+            if("contractor".equals(userString[1])){
+
+                tempContractor = new Contractor(new UserID(userString[0]), userString[2]);
+                placeholderUserMap.put(tempContractor.getUserID(),tempContractor);
+            }
+        }/*
         placeholderClient1 = new Client(new UserID("client"), "pass");
         placeholderClient2 = new Client(new UserID("Brigham"), "pass");
         placeholderClient3 = new Client(new UserID("Amon"), "pass");
@@ -31,6 +51,7 @@ public class UserCredentialsServer implements UserCredentialServerInterface {
         placeholderUserMap.put(placeholderContractor1.getUserID(), placeholderContractor1);
         placeholderUserMap.put(placeholderContractor2.getUserID(), placeholderContractor2);
         placeholderUserMap.put(placeholderContractor3.getUserID(), placeholderContractor3);
+        */
     }
 
     @Override

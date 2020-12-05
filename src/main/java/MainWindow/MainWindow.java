@@ -7,6 +7,7 @@ import ProfilePages.Customer.CustomerProfileContainer;
 import ProfilePages.Contractor.ContractorProfileContainer;
 import Messaging.MessagingPanel;
 import Server.ServerConnection;
+
 import Users.User;
 import Users.UserID;
 
@@ -14,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MainWindow extends JFrame {
     // References to databases/servers
@@ -61,14 +63,13 @@ public class MainWindow extends JFrame {
     private ContractorProfileContainer contractorProfileContainer = new ContractorProfileContainer();
 
 
-    public MainWindow(String title) {
+    public MainWindow(String title) throws IOException {
         super(title);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(mainPanelMinSize);
         this.setContentPane(mainPanel);
         this.pack();
-
 
         // Populate the content panel with all the different panels we plan on using
         // Using a cardLayout we can then switch between them easily
@@ -184,8 +185,9 @@ public class MainWindow extends JFrame {
         this.getRootPane().setDefaultButton(button);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         JFrame frame = new MainWindow("CMPT 275 Project PoC - Group 20");
         frame.setVisible(true);
+
     }
 }

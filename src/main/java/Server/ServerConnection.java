@@ -5,13 +5,14 @@ import Messaging.ConversationID;
 import Users.User;
 import Users.UserID;
 
+import java.io.IOException;
 import java.util.Vector;
 
 public class ServerConnection implements UserCredentialServerInterface, MessagingServerInterface {
     private UserCredentialsServer userCredentialsServer;
     private MessagingServer messagingServer;
 
-    public ServerConnection() {
+    public ServerConnection() throws IOException {
         userCredentialsServer = new UserCredentialsServer();
         messagingServer = new MessagingServer();
     }
