@@ -97,8 +97,12 @@ public class LoginPanel extends JPanel{
                         contractorLoginWarningLabel.setText("Invalid credentials.");
                         return;
                     }
-
-                    mainWindow.successfulLogin("contractor");
+                    if (loginResult.equals(UserCredentialServerInterface.LoginResult.SUCCESS_CONTRACTOR)) {
+                        mainWindow.successfulLogin("contractor");
+                    }
+                    if (loginResult.equals(UserCredentialServerInterface.LoginResult.SUCCESS_CLIENT)){
+                        contractorLoginWarningLabel.setText("Wrong user type, sign in as a client");
+                    }
                 }
             }
         });
@@ -116,21 +120,24 @@ public class LoginPanel extends JPanel{
                 {
                     clientLoginWarningLabel.setText("Error: Please enter all fields.");
                 }
-                else
-                {
+                else {
                     // check that username and password are in database if not set warning label. If so, proceed
                     // From main window, swap this panel for the contractor "home page" ie bookings panel
                     UserCredentialServerInterface.LoginResult loginResult = loginServer.tryLoginCredentials(new UserID(username), password);
-                    if (loginResult.equals(UserCredentialServerInterface.LoginResult.BAD_USERNAME)){
+                    if (loginResult.equals(UserCredentialServerInterface.LoginResult.BAD_USERNAME)) {
                         clientLoginWarningLabel.setText("User does not exist. Please sign up below.");
                         return;
                     }
-                    if (loginResult.equals(UserCredentialServerInterface.LoginResult.BAD_PASSWORD)){
+                    if (loginResult.equals(UserCredentialServerInterface.LoginResult.BAD_PASSWORD)) {
                         clientLoginWarningLabel.setText("Invalid credentials.");
                         return;
                     }
-
+                    if(loginResult.equals(UserCredentialServerInterface.LoginResult.SUCCESS_CLIENT)){
                     mainWindow.successfulLogin("client");
+                    }
+                    if (loginResult.equals(UserCredentialServerInterface.LoginResult.SUCCESS_CONTRACTOR)){
+                        contractorLoginWarningLabel.setText("Wrong user type, sign in as a contractor");
+                    }
                 }
             }
         });

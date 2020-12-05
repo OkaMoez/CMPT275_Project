@@ -5,7 +5,8 @@ import Users.UserID;
 
 public interface UserCredentialServerInterface {
     enum LoginResult {
-        SUCCESS,
+        SUCCESS_CLIENT,
+        SUCCESS_CONTRACTOR,
         BAD_USERNAME,
         BAD_PASSWORD
     }
@@ -18,7 +19,7 @@ public interface UserCredentialServerInterface {
         BUSINESS_NAME
     }
     boolean isFieldUnique(UniqueUserInfoField field, String name);
-
+    boolean isContractor();
     boolean updateClientName();
     boolean updateBusinessName();
     boolean updateProfilePicture();

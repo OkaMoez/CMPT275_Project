@@ -71,4 +71,8 @@ public class ServerConnection implements UserCredentialServerInterface, Messagin
     public boolean updateAddress() {
         return userCredentialsServer.updateAddress();
     }
+    @Override
+    public boolean isContractor() {
+        return userCredentialsServer.isContractor();
+    }
 }

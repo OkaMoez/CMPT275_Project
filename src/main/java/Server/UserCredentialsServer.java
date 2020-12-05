@@ -60,10 +60,18 @@ public class UserCredentialsServer implements UserCredentialServerInterface {
             return LoginResult.BAD_USERNAME;
         }
         User possibleUser = placeholderUserMap.get(userID);
+
         if (!possibleUser.verifyPassword(password)) {
             return LoginResult.BAD_PASSWORD;
         }
-        return LoginResult.SUCCESS;
+        String type = possibleUser.getUserType();
+        if("client".equals(type)){
+            return LoginResult.SUCCESS_CLIENT;
+        }
+        if("contractor".equals(type)){
+            return LoginResult.SUCCESS_CONTRACTOR;
+        }
+        return LoginResult.BAD_PASSWORD;
     }
 
     @Override
@@ -105,6 +113,10 @@ public class UserCredentialsServer implements UserCredentialServerInterface {
 
     @Override
     public boolean updateAddress() {
+        return false;
+    }
+    @Override
+    public boolean isContractor() {
         return false;
     }
 }
