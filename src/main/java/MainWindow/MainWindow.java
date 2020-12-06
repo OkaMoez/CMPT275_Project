@@ -42,7 +42,7 @@ public class MainWindow extends JFrame {
     private JButton calendarButton;
     private JButton logoutButton;
     private JButton profileButton;
-    static public boolean myProfile = true;
+    static public boolean myProfile = false;
 
     // Content panel, children, and settings
     enum LocalPanelNames {
@@ -59,8 +59,8 @@ public class MainWindow extends JFrame {
     private MessagingPanel messagingPanel = new MessagingPanel(this);
     private SchedulePanel schedulePanel = new SchedulePanel();
     private BrowsePanel browsePanel = new BrowsePanel();
-    private CustomerProfileContainer customerProfileContainer = new CustomerProfileContainer();
-    private ContractorProfileContainer contractorProfileContainer = new ContractorProfileContainer();
+
+
 
 
     public MainWindow(String title) throws IOException {
@@ -78,8 +78,7 @@ public class MainWindow extends JFrame {
         contentPanel.add(schedulePanel, LocalPanelNames.SCHEDULE.toString());
         contentPanel.add(messagingPanel, LocalPanelNames.MESSAGING.toString());
         contentPanel.add(new JPanel(), LocalPanelNames.HISTORY.toString());
-        contentPanel.add(customerProfileContainer, LocalPanelNames.PROFILE_CLIENT.toString());
-        contentPanel.add(contractorProfileContainer, LocalPanelNames.PROFILE_CONTRACTOR.toString());
+
 
         // Home page is login screen
         navigationPanel.setVisible(false);
@@ -114,16 +113,22 @@ public class MainWindow extends JFrame {
         profileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setEnterKeyAction(null);
+
                 //(amon) I think when the person logs in we should set a bool variable true or false
                 //depending on if they are a customer or contractor, so the right profile can be displayed
                 //and also so the right edit screen is given. I just made one here as placeholder until.
-
+                myProfile = true;
                 if(clientOrContractor.equals("client")) {
                     //customerProfile.myprofile(); //called because we clicked "my profile"
+
+                    CustomerProfileContainer customerProfileContainer = new CustomerProfileContainer();
+                    contentPanel.add(customerProfileContainer, LocalPanelNames.PROFILE_CLIENT.toString());
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, LocalPanelNames.PROFILE_CLIENT.toString());
                 }
                 else{
                     //contractorProfile.myprofile(); //called because we clicked "my profile"
+                    ContractorProfileContainer contractorProfileContainer = new ContractorProfileContainer();
+                    contentPanel.add(contractorProfileContainer, LocalPanelNames.PROFILE_CONTRACTOR.toString());
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, LocalPanelNames.PROFILE_CONTRACTOR.toString());
                 }
 

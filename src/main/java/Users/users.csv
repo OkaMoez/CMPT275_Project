@@ -1,3 +1,2 @@
-user1,client,12345,generic name
-user2,contractor,54321
-amon,client,mypass
+user1,client,12345,myname, 123 5th St Burnaby,604-598-9112,null
+user2,contractor,54321,Joe,null,778-453-2322,Joe's Plumbing

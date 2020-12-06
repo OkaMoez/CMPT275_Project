@@ -20,7 +20,10 @@ public abstract class User {
     }
 
     abstract public String getUserType();
-
+    abstract public String getName();
+    abstract public String getAddress();
+    abstract public String getNumber();
+    abstract public String getBusinessName();
     private void setPassword(String password) {
         this.password = password;
     }

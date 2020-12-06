@@ -1,6 +1,7 @@
 package ProfilePages.Contractor;
 
 import MainWindow.MainWindow;
+import Server.UserCredentialsServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ public class ContractorProfile extends JPanel {
     private JLabel temp;
     private JLabel temp2;
     private JPanel ProfilePage;
+    private JLabel Number;
 
 
     public ContractorProfile() {
@@ -38,7 +40,9 @@ public class ContractorProfile extends JPanel {
             this.Book.setVisible(true);
             this.RateButton.setVisible(true);
         }
-
+        BusinessName.setText("Name: " + UserCredentialsServer.currentUser.getBusinessName());
+        ContactName.setText("Contact Person: " + UserCredentialsServer.currentUser.getName());
+        Number.setText("Number: " + UserCredentialsServer.currentUser.getNumber());
         this.setLayout(new CardLayout());
         this.add(contractorProfile, "contractorProfile");
     }

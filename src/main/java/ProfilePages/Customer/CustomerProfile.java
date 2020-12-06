@@ -1,6 +1,7 @@
 package ProfilePages.Customer;
 
 import MainWindow.MainWindow;
+import Server.UserCredentialsServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,7 @@ public class CustomerProfile extends JPanel{
     private JLabel ProfileHeader;
     private JLabel temp;
     private JPanel profilePage;
+    private JLabel Number;
     private JButton backButton;
     public CustomerProfile(){
 
@@ -37,6 +39,10 @@ public class CustomerProfile extends JPanel{
             this.RateButton.setVisible(true);
         }
 
+
+        Name.setText("Name: " + UserCredentialsServer.currentUser.getName());
+        Address.setText("Address: " + UserCredentialsServer.currentUser.getAddress());
+        Number.setText("Number: " + UserCredentialsServer.currentUser.getNumber());
         this.setLayout(new CardLayout());
         this.add(customerProfile, "customerProfile");
     }

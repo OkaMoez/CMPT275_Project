@@ -17,7 +17,7 @@ public static boolean end = false;
 
             // use comma as separator
             String[] user = line.split(comma);
-
+                //System.out.println(user[4]);
                 return user;
 
 

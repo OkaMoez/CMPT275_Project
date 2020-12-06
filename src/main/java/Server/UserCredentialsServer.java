@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class UserCredentialsServer implements UserCredentialServerInterface {
+    public static User currentUser;
     private Client tempClient;
     private Contractor tempContractor;
     private String[] userString = new String[10];
@@ -29,11 +30,17 @@ public class UserCredentialsServer implements UserCredentialServerInterface {
              if("client".equals(userString[1])){
 
                 tempClient = new Client(new UserID(userString[0]), userString[2]);
+                tempClient.setName(userString[3]);
+                tempClient.setAddress(userString[4]);
+                tempClient.setNumber(userString[5]);
                 placeholderUserMap.put(tempClient.getUserID(),tempClient);
             }
             if("contractor".equals(userString[1])){
 
                 tempContractor = new Contractor(new UserID(userString[0]), userString[2]);
+                tempContractor.setBusinessName(userString[6]);
+                tempContractor.setContactName(userString[3]);
+                tempContractor.setNumber(userString[5]);
                 placeholderUserMap.put(tempContractor.getUserID(),tempContractor);
             }
         }/*
@@ -65,10 +72,15 @@ public class UserCredentialsServer implements UserCredentialServerInterface {
             return LoginResult.BAD_PASSWORD;
         }
         String type = possibleUser.getUserType();
+
         if("client".equals(type)){
+            currentUser = possibleUser;
+            System.out.println(currentUser.getName());
             return LoginResult.SUCCESS_CLIENT;
         }
         if("contractor".equals(type)){
+            currentUser = possibleUser;
+
             return LoginResult.SUCCESS_CONTRACTOR;
         }
         return LoginResult.BAD_PASSWORD;
