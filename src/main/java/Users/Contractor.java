@@ -4,6 +4,7 @@ public class Contractor extends User {
     private String contactName;
     private String businessName;
     private String number;
+    private String rating;
     public Contractor(UserID userID, String password) {
         super(userID, password);
         // initialise business name by querying database with userid and password
@@ -17,6 +18,7 @@ public class Contractor extends User {
     public String getName(){ return contactName;}
     public String getNumber(){return number;}
     public String getAddress(){return null;}
+    public String getRating(){return rating;}
 
     public void setBusinessName(String newBusinessName){ this.businessName = newBusinessName;}
     public void setContactName(String newContactName){this.contactName = newContactName;}

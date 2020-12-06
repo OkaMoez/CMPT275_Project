@@ -162,6 +162,7 @@ public class MainWindow extends JFrame {
         else if(userType.equals("client"))
         {
             currentUser = serverConnection.getUserFromCredentials(new UserID(username), password);
+            browseButton.setVisible(true);
             ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.BROWSE.toString());
         }
 

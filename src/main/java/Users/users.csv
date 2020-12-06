@@ -1,2 +1,3 @@
-user1,client,12345,myname, 123 5th St Burnaby,604-598-9112,null
-user2,contractor,54321,Joe,null,778-453-2322,Joe's Plumbing
+USERNAME,   USERTYPE, PASSWORD,   FULL NAME,   ADDRESS,    PHONE NUMBER,   BUSINESS NAME,  RATING(out of 5)
+user1,client,12345,myname, 123 5th St Burnaby,604-598-9112,null,4
+user2,contractor,54321,Joe,null,778-453-2322,Joe's Plumbing,5
