@@ -156,6 +156,7 @@ public class LoginPanel extends JPanel{
         signUpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 signUpWarningLabel.setText("");
+
                 if(userType.equals("contractor")){
                     signUpUser[0] = contractorSignupContentPanel.getUsername();
                     signUpUser[1] ="contractor";
@@ -168,6 +169,10 @@ public class LoginPanel extends JPanel{
                     signUpUser[8]=contractorSignupContentPanel.getSubUserType();
 
                     tempContractor = new Contractor(new UserID(signUpUser[0]), signUpUser[2]);
+                    if(UserCredentialsServer.placeholderUserMap.containsKey(tempContractor.getUserID())){
+                        signUpWarningLabel.setText("Username already exists");
+                        return;
+                    }
                     tempContractor.setName(signUpUser[3]);
                     tempContractor.setBusinessName(signUpUser[6]);
                     tempContractor.setNumber(signUpUser[5]);
@@ -187,6 +192,10 @@ public class LoginPanel extends JPanel{
                     signUpUser[8] ="null";
 
                     tempClient = new Client(new UserID(signUpUser[0]), signUpUser[2]);
+                    if(UserCredentialsServer.placeholderUserMap.containsKey(tempClient.getUserID())){
+                        signUpWarningLabel.setText("Username already exists");
+                        return;
+                    }
                     tempClient.setName(signUpUser[3]);
                     tempClient.setAddress(signUpUser[4]);
                     tempClient.setNumber(signUpUser[5]);
@@ -241,6 +250,9 @@ public class LoginPanel extends JPanel{
                 clientLoginWarningLabel.setText("");
                 signUpButtonsPanel.setVisible(false);
                 loginButtonsPanel.setVisible(true);
+                contractorSignupContentPanel.setBlank();
+                clientSignupContentPanel.setBlank();
+                setblank();
                 ((CardLayout)signUpOrLoginContentPanel.getLayout()).show(signUpOrLoginContentPanel,"login");
             }
         });
