@@ -74,7 +74,12 @@ public class ContractorProfileEdit extends JPanel{
                 updatedUser[6] =UserCredentialsServer.currentUser.getBusinessName();
                 updatedUser[7] = UserCredentialsServer.currentUser.getRating();
                 updatedUser[8] =UserCredentialsServer.currentUser.getSubUserType();
-
+                for(int i=0;i<8;i++){
+                    if(updatedUser[i].contains(",")){
+                        editWarningLabel.setText("Please enter values without including commas");
+                        return;
+                    }
+                }
                 try {
                     csvSearch.editUser(updatedUser);
                 } catch (FileNotFoundException fileNotFoundException) {

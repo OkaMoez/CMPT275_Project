@@ -49,7 +49,14 @@ public class SignupContentPanel extends JPanel{
         return (nameField.getText());
     }
     public String getPassword() {
-        return ( new String(enterPasswordField.getPassword()));
+        String pass1 =new String(enterPasswordField.getPassword());
+        String pass2= new String(confirmPasswordField.getPassword());
+        if(pass1.equals(pass2)){
+            return pass1;
+        }
+        else{
+            return "badPassword";
+        }
     }
     public String getAddressOrBusiness(){return (addressOrBusinessNameField.getText());}
     public String getNumber(){return (numberField.getText());}

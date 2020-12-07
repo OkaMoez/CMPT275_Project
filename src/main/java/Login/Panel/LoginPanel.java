@@ -167,6 +167,16 @@ public class LoginPanel extends JPanel{
                     signUpUser[6] =contractorSignupContentPanel.getAddressOrBusiness();
                     signUpUser[7]= "no ratings";
                     signUpUser[8]=contractorSignupContentPanel.getSubUserType();
+                    if(signUpUser[2].equals("badPassword")){
+                        signUpWarningLabel.setText("Passwords do not match");
+                        return;
+                    }
+                    for(int i=0;i<8;i++){
+                        if(signUpUser[i].contains(",")){
+                            signUpWarningLabel.setText("Please enter values without including commas");
+                            return;
+                        }
+                    }
 
                     tempContractor = new Contractor(new UserID(signUpUser[0]), signUpUser[2]);
                     if(UserCredentialsServer.placeholderUserMap.containsKey(tempContractor.getUserID())){
@@ -190,7 +200,16 @@ public class LoginPanel extends JPanel{
                     signUpUser[6] ="null";
                     signUpUser[7] ="null";
                     signUpUser[8] ="null";
-
+                    if(signUpUser[2].equals("badPassword")){
+                        signUpWarningLabel.setText("Passwords do not match");
+                        return;
+                    }
+                    for(int i=0;i<8;i++){
+                        if(signUpUser[i].contains(",")){
+                            signUpWarningLabel.setText("Please enter values without including commas");
+                            return;
+                        }
+                    }
                     tempClient = new Client(new UserID(signUpUser[0]), signUpUser[2]);
                     if(UserCredentialsServer.placeholderUserMap.containsKey(tempClient.getUserID())){
                         signUpWarningLabel.setText("Username already exists");

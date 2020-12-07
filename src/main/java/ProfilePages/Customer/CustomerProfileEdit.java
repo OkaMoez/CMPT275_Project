@@ -67,7 +67,12 @@ public class CustomerProfileEdit extends JPanel{
                 updatedUser[6] ="null";
                 updatedUser[7] ="null";
                 updatedUser[8] ="null";
-
+                for(int i=0;i<8;i++){
+                    if(updatedUser[i].contains(",")){
+                        editWarningLabel.setText("Please enter values without including commas");
+                        return;
+                    }
+                }
                 try {
                     csvSearch.editUser(updatedUser);
                 } catch (FileNotFoundException fileNotFoundException) {
