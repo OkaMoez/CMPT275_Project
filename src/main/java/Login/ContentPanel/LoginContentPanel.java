@@ -28,4 +28,11 @@ public class LoginContentPanel extends JPanel{
 
     public String getClientPassword(){ return new String(clientPasswordField.getPassword());}
 
+    public void setBlank(){
+        contractorUsernameTextField.setText("");
+        contractorPasswordField.setText("");
+        clientUsernameTextField.setText("");
+        clientPasswordField.setText("");
+    }
+
 }

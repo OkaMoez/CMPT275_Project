@@ -22,6 +22,7 @@ public class ContractorProfile extends JPanel {
     private JLabel temp2;
     private JPanel ProfilePage;
     private JLabel Number;
+    private JLabel subUserType;
 
 
     public ContractorProfile() {
@@ -40,11 +41,21 @@ public class ContractorProfile extends JPanel {
             this.Book.setVisible(true);
             this.RateButton.setVisible(true);
         }
-        BusinessName.setText("Name: " + UserCredentialsServer.currentUser.getBusinessName());
+        BusinessName.setText("Business Name: " + UserCredentialsServer.currentUser.getBusinessName());
         ContactName.setText("Contact Person: " + UserCredentialsServer.currentUser.getName());
         Number.setText("Number: " + UserCredentialsServer.currentUser.getNumber());
+        subUserType.setText("Trade: "+ UserCredentialsServer.currentUser.getSubUserType());
+        Rating.setText("Rating: "+UserCredentialsServer.currentUser.getRating());
+
         this.setLayout(new CardLayout());
         this.add(contractorProfile, "contractorProfile");
+    }
+    public void updateVales(){
+        ContactName.setText("Contact Person: " + UserCredentialsServer.currentUser.getName());
+        BusinessName.setText("Business Name: " + UserCredentialsServer.currentUser.getBusinessName());
+        Number.setText("Number: " + UserCredentialsServer.currentUser.getNumber());
+        subUserType.setText("Trade: "+ UserCredentialsServer.currentUser.getSubUserType());
+        Rating.setText("Rating: "+UserCredentialsServer.currentUser.getRating());
     }
 
     //(amon) If we're viewing our own profile, certain boxes and buttons will be hidden or made visible

@@ -9,14 +9,14 @@ public class UserCredentialsServer implements UserCredentialServerInterface {
     public static User currentUser;
     private Client tempClient;
     private Contractor tempContractor;
-    private String[] userString = new String[10];
+    private String[] userString = new String[9];
     private Client placeholderClient1;
     private Client placeholderClient2;
     private Client placeholderClient3;
     private Contractor placeholderContractor1;
     private Contractor placeholderContractor2;
     private Contractor placeholderContractor3;
-    private HashMap<UserID, User> placeholderUserMap;
+    public static HashMap<UserID, User> placeholderUserMap;
     private CsvSearch csvSearch = new CsvSearch();
 
     public UserCredentialsServer() throws IOException {
@@ -39,8 +39,10 @@ public class UserCredentialsServer implements UserCredentialServerInterface {
 
                 tempContractor = new Contractor(new UserID(userString[0]), userString[2]);
                 tempContractor.setBusinessName(userString[6]);
-                tempContractor.setContactName(userString[3]);
+                tempContractor.setName(userString[3]);
                 tempContractor.setNumber(userString[5]);
+                tempContractor.setRating(userString[7]);
+                tempContractor.setSubUserType(userString[8]);
                 placeholderUserMap.put(tempContractor.getUserID(),tempContractor);
             }
         }/*
@@ -75,7 +77,7 @@ public class UserCredentialsServer implements UserCredentialServerInterface {
 
         if("client".equals(type)){
             currentUser = possibleUser;
-            System.out.println(currentUser.getName());
+            //System.out.println(currentUser.getName());
             return LoginResult.SUCCESS_CLIENT;
         }
         if("contractor".equals(type)){

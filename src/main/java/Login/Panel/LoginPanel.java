@@ -4,12 +4,18 @@ import Login.ContentPanel.LoginContentPanel;
 import MainWindow.MainWindow;
 import Login.SignupContentPanel.SignupContentPanel;
 import Server.UserCredentialServerInterface;
+import Server.UserCredentialsServer;
+import Users.Client;
+import Users.Contractor;
+import Users.CsvSearch;
 import Users.UserID;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class LoginPanel extends JPanel{
@@ -51,10 +57,14 @@ public class LoginPanel extends JPanel{
     private String signUpUsername;
     private String signUpName;
     private String signUpPassword;
+    private String[] signUpUser= new String[9];
+    private CsvSearch csvSearch = new CsvSearch();
+    private Client tempClient;
+    private Contractor tempContractor;
 
     UserCredentialServerInterface loginServer;
 
-    public LoginPanel(final MainWindow mainWindow) {
+    public LoginPanel(final MainWindow mainWindow) throws IOException {
         loginServer = mainWindow.getServerConnection();
 
         add(loginPanel);
@@ -147,21 +157,56 @@ public class LoginPanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 signUpWarningLabel.setText("");
                 if(userType.equals("contractor")){
-                    signUpUsername = contractorSignupContentPanel.getUsername();
-                    signUpName = contractorSignupContentPanel.getName();
-                    signUpPassword = contractorSignupContentPanel.getPassword();
+                    signUpUser[0] = contractorSignupContentPanel.getUsername();
+                    signUpUser[1] ="contractor";
+                    signUpUser[2] =contractorSignupContentPanel.getPassword();
+                    signUpUser[3] =contractorSignupContentPanel.getName();
+                    signUpUser[4] ="null";
+                    signUpUser[5] =contractorSignupContentPanel.getNumber();
+                    signUpUser[6] =contractorSignupContentPanel.getAddressOrBusiness();
+                    signUpUser[7]= "no ratings";
+                    signUpUser[8]=contractorSignupContentPanel.getSubUserType();
+
+                    tempContractor = new Contractor(new UserID(signUpUser[0]), signUpUser[2]);
+                    tempContractor.setName(signUpUser[3]);
+                    tempContractor.setBusinessName(signUpUser[6]);
+                    tempContractor.setNumber(signUpUser[5]);
+                    tempContractor.setSubUserType(signUpUser[8]);
+                    UserCredentialsServer.placeholderUserMap.put(tempContractor.getUserID(),tempContractor);
+
                 }
                 else if(userType.equals("client")){
-                    signUpUsername = clientSignupContentPanel.getUsername();
-                    signUpName = clientSignupContentPanel.getName();
-                    signUpPassword = clientSignupContentPanel.getPassword();
+                    signUpUser[0] = clientSignupContentPanel.getUsername();
+                    signUpUser[1] ="client";
+                    signUpUser[2] =clientSignupContentPanel.getPassword();
+                    signUpUser[3] =clientSignupContentPanel.getName();
+                    signUpUser[4] =clientSignupContentPanel.getAddressOrBusiness();
+                    signUpUser[5] =clientSignupContentPanel.getNumber();
+                    signUpUser[6] ="null";
+                    signUpUser[7] ="null";
+                    signUpUser[8] ="null";
+
+                    tempClient = new Client(new UserID(signUpUser[0]), signUpUser[2]);
+                    tempClient.setName(signUpUser[3]);
+                    tempClient.setAddress(signUpUser[4]);
+                    tempClient.setNumber(signUpUser[5]);
+                    UserCredentialsServer.placeholderUserMap.put(tempClient.getUserID(),tempClient);
+
                 }
 
-                if (signUpUsername.equals("") || signUpName.equals("") || signUpPassword.equals("")){
+                if (Arrays.asList(signUpUser).contains("")){
                     signUpWarningLabel.setText("Please enter all fields.");
                 }
                 else {
                     // execute a sign up function
+                    try {
+                        csvSearch.addUser(signUpUser);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                    clientSignupContentPanel.setBlank();
+                    contractorSignupContentPanel.setBlank();
+                    signUpWarningLabel.setText("Sign up Successful: Please login");
                     mainWindow.successfulSignUp(userType);
                 }
             }
@@ -199,6 +244,9 @@ public class LoginPanel extends JPanel{
                 ((CardLayout)signUpOrLoginContentPanel.getLayout()).show(signUpOrLoginContentPanel,"login");
             }
         });
+    }
+    public void setblank(){
+        loginContentPanel.setBlank();
     }
 
 

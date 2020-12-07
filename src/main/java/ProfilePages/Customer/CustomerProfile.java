@@ -19,7 +19,6 @@ public class CustomerProfile extends JPanel{
     private JButton RateButton;
     private JLabel Name;
     private JLabel Address;
-    private JLabel Rating;
     private JPanel Content;
     private JPanel BlankSpace;
     private JLabel ProfileHeader;
@@ -34,9 +33,9 @@ public class CustomerProfile extends JPanel{
             myprofile();
         }
         else {
-            this.EnterRating.setVisible(true);
+
             this.Contact.setVisible(true);
-            this.RateButton.setVisible(true);
+
         }
 
 
@@ -46,12 +45,16 @@ public class CustomerProfile extends JPanel{
         this.setLayout(new CardLayout());
         this.add(customerProfile, "customerProfile");
     }
-
+    public void updateVales(){
+        Name.setText("Name: " + UserCredentialsServer.currentUser.getName());
+        Address.setText("Address: " + UserCredentialsServer.currentUser.getAddress());
+        Number.setText("Number: " + UserCredentialsServer.currentUser.getNumber());
+    }
     //(amon) If we're viewing our own profile, certain boxes and buttons will be hidden or made visible
 public void myprofile(){
-        this.EnterRating.setVisible(false);
+
         this.Contact.setVisible(false);
-        this.RateButton.setVisible(false);
+
 }
 
 }

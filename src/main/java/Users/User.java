@@ -24,6 +24,17 @@ public abstract class User {
     abstract public String getAddress();
     abstract public String getNumber();
     abstract public String getBusinessName();
+    abstract public String getRating();
+    abstract public String getSubUserType();
+    public String getPassword(){return password;}
+
+    abstract public void setName(String newName);
+    abstract public void setAddress(String newAddress);
+    abstract public void setNumber(String newNumber);
+    abstract public void setBusinessName(String newBusinessName);
+    abstract public void setRating(String newRating);
+    abstract public void setSubUserType(String newSubUSerType);
+
     private void setPassword(String password) {
         this.password = password;
     }

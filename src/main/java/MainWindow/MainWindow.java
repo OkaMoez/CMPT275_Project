@@ -2,6 +2,7 @@ package MainWindow;
 
 import Booking.SchedulePanel;
 import Browse.BrowsePanel;
+import Login.ContentPanel.LoginContentPanel;
 import Login.Panel.LoginPanel;
 import ProfilePages.Customer.CustomerProfileContainer;
 import ProfilePages.Contractor.ContractorProfileContainer;
@@ -59,7 +60,6 @@ public class MainWindow extends JFrame {
     private MessagingPanel messagingPanel = new MessagingPanel(this);
     private SchedulePanel schedulePanel = new SchedulePanel();
     private BrowsePanel browsePanel = new BrowsePanel();
-
 
 
 
@@ -121,13 +121,23 @@ public class MainWindow extends JFrame {
                 if(clientOrContractor.equals("client")) {
                     //customerProfile.myprofile(); //called because we clicked "my profile"
 
-                    CustomerProfileContainer customerProfileContainer = new CustomerProfileContainer();
+                    CustomerProfileContainer customerProfileContainer = null;
+                    try {
+                        customerProfileContainer = new CustomerProfileContainer();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                     contentPanel.add(customerProfileContainer, LocalPanelNames.PROFILE_CLIENT.toString());
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, LocalPanelNames.PROFILE_CLIENT.toString());
                 }
                 else{
                     //contractorProfile.myprofile(); //called because we clicked "my profile"
-                    ContractorProfileContainer contractorProfileContainer = new ContractorProfileContainer();
+                    ContractorProfileContainer contractorProfileContainer = null;
+                    try {
+                        contractorProfileContainer = new ContractorProfileContainer();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                     contentPanel.add(contractorProfileContainer, LocalPanelNames.PROFILE_CONTRACTOR.toString());
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, LocalPanelNames.PROFILE_CONTRACTOR.toString());
                 }
@@ -140,6 +150,7 @@ public class MainWindow extends JFrame {
                 // end login session and destruct current user
                 currentUser = null;
                 navigationPanel.setVisible(false);
+                loginPanel.setblank();
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.LOGIN.toString());
             }
         });
@@ -167,7 +178,7 @@ public class MainWindow extends JFrame {
         }
 
         // Output user name and user type to console just to confirm who is logged in
-        System.out.println(currentUser.getUserID().toString() + " is logged in as a " + currentUser.getUserType());
+        //System.out.println(currentUser.getUserID().toString() + " is logged in as a " + currentUser.getUserType());
     }
 
     // Successful Sign Up (does same thing as login)
@@ -175,7 +186,9 @@ public class MainWindow extends JFrame {
     public void successfulSignUp(String userType){
         // get username and password for login
         // using credentials create user and then...
-        successfulLogin(userType);
+        navigationPanel.setVisible(false);
+        ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.LOGIN.toString());
+
     }
 
     public User getCurrentUser() {

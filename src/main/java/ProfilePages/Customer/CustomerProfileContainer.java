@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class CustomerProfileContainer extends JPanel{
     private JPanel customerContainer;
@@ -18,7 +19,7 @@ public class CustomerProfileContainer extends JPanel{
 
     private CustomerProfileEdit customerProfileEdit = new CustomerProfileEdit();
 
-    public  CustomerProfileContainer(){
+    public  CustomerProfileContainer() throws IOException {
         content.setLayout(cardLayout);
 
         add(customerContainer);
@@ -32,6 +33,8 @@ public class CustomerProfileContainer extends JPanel{
 
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                customerProfile.updateVales();
+                customerProfileEdit.clearLabel();
                 ((CardLayout) content.getLayout()).show(content, "customerProfile");
                 backButton.setVisible(false);
                 if(MainWindow.myProfile){

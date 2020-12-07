@@ -17,9 +17,13 @@ public class Client extends User{
     public String getAddress(){return address;}
     public String getNumber(){return number;}
     public String getBusinessName(){return null;}
+    public String getSubUserType(){return null;}
+    public String getRating(){return null;}
 
     public void setName(String newName){this.name= newName;}
     public void setAddress(String newAddress){this.address= newAddress;}
     public void setNumber(String newNumber){this.number= newNumber;}
-
+    public void setBusinessName(String newBusinessName){ }
+    public void setRating(String newBusinessName){ }
+    public void setSubUserType(String newBusinessName){ }
 }
