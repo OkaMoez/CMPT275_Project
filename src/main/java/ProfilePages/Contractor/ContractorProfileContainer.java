@@ -1,6 +1,5 @@
 package ProfilePages.Contractor;
 
-import MainWindow.MainWindow;
 import Users.Contractor;
 
 import javax.swing.*;
@@ -16,20 +15,17 @@ public class ContractorProfileContainer extends JPanel {
     private JPanel content;
     CardLayout cardLayout = new CardLayout();
 
-
-
     private ContractorProfileEdit contractorProfileEdit = new ContractorProfileEdit();
 
     public ContractorProfileContainer() throws IOException {
-         ContractorProfile contractorProfile = new ContractorProfile();
+        ContractorProfile contractorProfile = new ContractorProfile();
         content.setLayout(cardLayout);
 
         add(contractorContainer);
         content.add(contractorProfile, "contractorProfile");
         content.add(contractorProfileEdit, "contractorProfileEdit");
         backButton.setVisible(false);
-
-            editButton.setVisible(true);
+        editButton.setVisible(true);
 
         ((CardLayout) content.getLayout()).show(content, "contractorProfile");
 
@@ -39,8 +35,7 @@ public class ContractorProfileContainer extends JPanel {
                 contractorProfileEdit.clearLabel();
                 ((CardLayout) content.getLayout()).show(content, "contractorProfile");
                 backButton.setVisible(false);
-
-                    editButton.setVisible(true);
+                editButton.setVisible(true);
 
             }
         });
@@ -58,23 +53,22 @@ public class ContractorProfileContainer extends JPanel {
 
         add(contractorContainer);
         content.add(contractorProfile, "contractorProfile");
-        content.add(contractorProfileEdit, "contractorProfileEdit");
-        backButton.setVisible(false);
-
-            editButton.setVisible(false);
+        backButton.setVisible(true);
+        editButton.setVisible(false);
 
         ((CardLayout) content.getLayout()).show(content, "contractorProfile");
 
+        // (Uchechi) Redefined for Browse Panel within BrowseSearchPanel.java. This might be redundant here
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 contractorProfile.updateVales();
                 contractorProfileEdit.clearLabel();
                 ((CardLayout) content.getLayout()).show(content, "contractorProfile");
                 backButton.setVisible(false);
-
-                    editButton.setVisible(false);
-
+                editButton.setVisible(false);
             }
         });
     }
+
+    public JButton getBackButton() {return backButton;}
 }

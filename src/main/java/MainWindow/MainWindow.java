@@ -2,14 +2,12 @@ package MainWindow;
 
 import Booking.SchedulePanel;
 import Browse.BrowsePanel;
-import Login.ContentPanel.LoginContentPanel;
 import Login.Panel.LoginPanel;
 import ProfilePages.Customer.CustomerProfileContainer;
 import ProfilePages.Contractor.ContractorProfileContainer;
 import Messaging.MessagingPanel;
 import Server.ServerConnection;
 
-import Users.Contractor;
 import Users.User;
 import Users.UserID;
 
@@ -150,6 +148,7 @@ public class MainWindow extends JFrame {
                 setEnterKeyAction(null);
                 // end login session and destruct current user
                 currentUser = null;
+                browsePanel = null;
                 navigationPanel.setVisible(false);
                 loginPanel.setblank();
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.LOGIN.toString());
@@ -164,6 +163,7 @@ public class MainWindow extends JFrame {
         username = loginPanel.getUsername();
         password = loginPanel.getPassword();
         clientOrContractor = userType;
+        browsePanel = new BrowsePanel();
         navigationPanel.setVisible(true);
         if(userType.equals("contractor"))
         {
