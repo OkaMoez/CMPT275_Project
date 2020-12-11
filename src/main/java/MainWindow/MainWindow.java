@@ -9,6 +9,7 @@ import ProfilePages.Contractor.ContractorProfileContainer;
 import Messaging.MessagingPanel;
 import Server.ServerConnection;
 
+import Users.Contractor;
 import Users.User;
 import Users.UserID;
 
@@ -43,7 +44,7 @@ public class MainWindow extends JFrame {
     private JButton calendarButton;
     private JButton logoutButton;
     private JButton profileButton;
-    static public boolean myProfile = false;
+    //static public boolean myProfile = false;
 
     // Content panel, children, and settings
     enum LocalPanelNames {
@@ -117,7 +118,7 @@ public class MainWindow extends JFrame {
                 //(amon) I think when the person logs in we should set a bool variable true or false
                 //depending on if they are a customer or contractor, so the right profile can be displayed
                 //and also so the right edit screen is given. I just made one here as placeholder until.
-                myProfile = true;
+                //myProfile = true;
                 if(clientOrContractor.equals("client")) {
                     //customerProfile.myprofile(); //called because we clicked "my profile"
 

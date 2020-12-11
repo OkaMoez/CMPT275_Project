@@ -29,16 +29,9 @@ public class CustomerProfile extends JPanel{
     public CustomerProfile(){
 
         //I set the box to enter
-        if (MainWindow.myProfile) {
-            myprofile();
-        }
-        else {
-
-            this.Contact.setVisible(true);
-
-        }
 
 
+        this.Contact.setVisible(false);
         Name.setText("Name: " + UserCredentialsServer.currentUser.getName());
         Address.setText("Address: " + UserCredentialsServer.currentUser.getAddress());
         Number.setText("Number: " + UserCredentialsServer.currentUser.getNumber());
@@ -50,11 +43,6 @@ public class CustomerProfile extends JPanel{
         Address.setText("Address: " + UserCredentialsServer.currentUser.getAddress());
         Number.setText("Number: " + UserCredentialsServer.currentUser.getNumber());
     }
-    //(amon) If we're viewing our own profile, certain boxes and buttons will be hidden or made visible
-public void myprofile(){
 
-        this.Contact.setVisible(false);
-
-}
 
 }

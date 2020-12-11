@@ -26,9 +26,8 @@ public class CustomerProfileContainer extends JPanel{
         content.add(customerProfile, "customerProfile");
         content.add(customerProfileEdit, "customerProfileEdit");
         backButton.setVisible(false);
-        if(MainWindow.myProfile){
-            editButton.setVisible(true);
-        }
+        editButton.setVisible(true);
+
         ((CardLayout) content.getLayout()).show(content, "customerProfile");
 
         backButton.addActionListener(new ActionListener() {
@@ -37,9 +36,8 @@ public class CustomerProfileContainer extends JPanel{
                 customerProfileEdit.clearLabel();
                 ((CardLayout) content.getLayout()).show(content, "customerProfile");
                 backButton.setVisible(false);
-                if(MainWindow.myProfile){
-                    editButton.setVisible(true);
-                }
+                editButton.setVisible(true);
+
             }
         });
         editButton.addActionListener(new ActionListener() {
