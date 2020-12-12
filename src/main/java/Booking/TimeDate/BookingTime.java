@@ -11,6 +11,14 @@ public class BookingTime {
         mEndTime = endTime;
     }
 
+    public HourMinute getmStartTime() {
+        return mStartTime;
+    }
+
+    public HourMinute getmEndTime() {
+        return mEndTime;
+    }
+
     @Override
     public String toString() {
         return "From " + mStartTime.toString() + " to " + mEndTime.toString();

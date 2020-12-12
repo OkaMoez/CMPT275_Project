@@ -36,10 +36,6 @@ public class ContractorProfile extends JPanel {
 
         try {
             BufferedImage myPicture = ImageIO.read(new File("src/main/resources/profile.JPG"));
-
-            //Use following line for JAR file
-            //BufferedImage myPicture = ImageIO.read(new File("resources/profile.JPG"));
-
             Image scaledInstance = myPicture.getScaledInstance(150,150,Image.SCALE_DEFAULT);
             JLabel picLabel = new JLabel(new ImageIcon(scaledInstance));
             ProfilePicture.setLayout(new CardLayout());
@@ -72,10 +68,6 @@ public class ContractorProfile extends JPanel {
 
         try {
             BufferedImage myPicture = ImageIO.read(new File("src/main/resources/profile.JPG"));
-
-            //Use following line for JAR file
-            //BufferedImage myPicture = ImageIO.read(new File("resources/profile.JPG"));
-
             Image scaledInstance = myPicture.getScaledInstance(150,150,Image.SCALE_DEFAULT);
             JLabel picLabel = new JLabel(new ImageIcon(scaledInstance));
             ProfilePicture.setLayout(new CardLayout());

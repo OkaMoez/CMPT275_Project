@@ -1,5 +1,6 @@
 package Server;
 
+import Booking.BookingDatabase;
 import Messaging.ChatMessage;
 import Messaging.ConversationID;
 import Users.User;
@@ -10,10 +11,12 @@ import java.util.Vector;
 public class ServerConnection implements UserCredentialServerInterface, MessagingServerInterface {
     private UserCredentialsServer userCredentialsServer;
     private MessagingServer messagingServer;
+    private BookingDatabase bookingDatabase;
 
     public ServerConnection() {
         userCredentialsServer = new UserCredentialsServer();
         messagingServer = new MessagingServer();
+        bookingDatabase = new BookingDatabase();
     }
 
     @Override
