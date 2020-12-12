@@ -207,7 +207,7 @@ public class MainWindow extends JFrame {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new MainWindow("CMPT 275 Project PoC - Group 20");
+        JFrame frame = new MainWindow("QuickFix - Group 20");
         frame.setVisible(true);
 
     }
