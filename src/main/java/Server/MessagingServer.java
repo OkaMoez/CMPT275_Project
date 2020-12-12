@@ -2,8 +2,11 @@ package Server;
 
 import Messaging.ChatMessage;
 import Messaging.ConversationID;
+import Users.Csv.CsvMessagingInterface;
+import Users.Csv.CsvSearch;
 import Users.UserID;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -18,44 +21,53 @@ public class MessagingServer implements MessagingServerInterface {
 
     private HashMap<ConversationID, Vector<String>> placeholderChats;
 
+    private CsvMessagingInterface csvMessageInterface;
 
     public MessagingServer() {
-        placeholderUser1 = new UserID("user");
-        placeholderUser2 = new UserID("Amon");
-        placeholderUser3 = new UserID("Brigham");
-        placeholderUser4 = new UserID("Uchechi");
-        placeholderUser5 = new UserID("Bob Ross");
-        placeholderUser6 = new UserID("Bob the Builder");
-        placeholderUser7 = new UserID("Gordon Ramsey");
-
+        try {
+            csvMessageInterface = new CsvSearch();
+        }
+        catch (IOException e) {
+            System.out.println("General I/O exception: " + e.getMessage());
+            e.printStackTrace();
+        }
         placeholderChats = new HashMap<ConversationID, Vector<String>>();
     }
 
     @Override
     public Vector<ConversationID> getConversationList(UserID currentUser) {
-        // placeholder
-        Vector<ConversationID> placeholderConversationIDs = new Vector<ConversationID>();
-        placeholderConversationIDs.add(new ConversationID(placeholderUser1, placeholderUser5));
-        placeholderConversationIDs.add(new ConversationID(placeholderUser1, placeholderUser6));
-        placeholderConversationIDs.add(new ConversationID(placeholderUser1, placeholderUser7));
-        return placeholderConversationIDs;
+        Vector<ConversationID> results = new Vector<ConversationID>();
+        try {
+            results = csvMessageInterface.getUsersConversations(currentUser);
+        }
+        catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return results;
     }
 
     @Override
-    public Vector<String> getConversationHistory(ConversationID conversationID) {
-        if (placeholderChats.containsKey(conversationID)) {
-            return placeholderChats.get(conversationID);
+    public Vector<ChatMessage> getConversationHistory(ConversationID conversationID) {
+        Vector<ChatMessage> results = new Vector<ChatMessage>();
+        try {
+            results = csvMessageInterface.getConversationHistory(conversationID);
         }
-
-        Vector<String> placeholderConversation = new Vector<String>();
-        placeholderConversation.add("[Client] This placeholder text is weak sauce.\n");
-        placeholderConversation.add("[Contractor] Yeah.  It doesn't even save history between sessions.\n");
-        placeholderChats.put(conversationID, placeholderConversation);
-        return placeholderConversation;
+        catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return results;
     }
 
     @Override
     public void sendMessage(ConversationID conversationID, ChatMessage message) {
-        placeholderChats.get(conversationID).add(message.getMessage());
+        try {
+            csvMessageInterface.addMessageToConversation(conversationID, message);
+        }
+        catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

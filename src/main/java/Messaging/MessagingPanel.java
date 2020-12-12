@@ -10,6 +10,7 @@ import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.Vector;
 
 public class MessagingPanel extends JPanel{
@@ -57,10 +58,13 @@ public class MessagingPanel extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Document document = messagePane.getDocument();
-                String newMessage = "[Client] " + sendMessageTextField.getText() + "\n";
+                String newMessage = sendMessageTextField.getText();
                 try {
-                    messagingServer.sendMessage(currentConversation, new ChatMessage(newMessage));
-                    document.insertString(document.getLength(), newMessage, null);
+                    LocalDateTime timestamp = java.time.LocalDateTime.now();
+                    ChatMessage messageToSend = new ChatMessage(mainWindow.getCurrentUser().getUserID(), timestamp, newMessage);
+                    messagingServer.sendMessage(currentConversation, messageToSend);
+
+                    addMessageToDocument(document, messageToSend);
 
                     // Clear message text field for next message input
                     sendMessageTextField.setText("");
@@ -85,7 +89,7 @@ public class MessagingPanel extends JPanel{
                     currentConversation = conversationID;
                     messageLabel.setText(currentConversation.getOtherUserID().toString());
                     messagePane.setText(null);
-                    Vector<String> chatHistory = messagingServer.getConversationHistory(conversationID);
+                    Vector<ChatMessage> chatHistory = messagingServer.getConversationHistory(conversationID);
 
                     // Populate page with chat history
                     Document document = messagePane.getDocument();
@@ -118,9 +122,11 @@ public class MessagingPanel extends JPanel{
         model.addElement(conversationID);
     }
 
-    private void addMessageToDocument(Document document, String message) {
+    private void addMessageToDocument(Document document, ChatMessage message) {
         try {
-            document.insertString(document.getLength(), message, null);
+            String messageInfo = "[" + message.getSender().toString() + "] - " + message.getTimestamp().toString() + "\n";
+            document.insertString(document.getLength(), messageInfo, null);
+            document.insertString(document.getLength(), message.getMessage() + "\n", null);
         }
         catch (Exception e) {
             // This is only so that the insertString calls will fire

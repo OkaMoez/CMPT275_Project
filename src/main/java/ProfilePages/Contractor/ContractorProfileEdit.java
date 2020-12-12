@@ -1,8 +1,7 @@
 package ProfilePages.Contractor;
 
 import Server.UserCredentialsServer;
-import Users.CsvSearch;
-import Users.UserID;
+import Users.Csv.CsvSearch;
 import com.opencsv.exceptions.CsvException;
 
 import javax.swing.*;

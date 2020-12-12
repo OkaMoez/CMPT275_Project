@@ -1,6 +1,7 @@
 package Server;
 
 import Users.*;
+import Users.Csv.CsvSearch;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,50 +18,18 @@ public class UserCredentialsServer implements UserCredentialServerInterface {
     private Contractor placeholderContractor2;
     private Contractor placeholderContractor3;
     public static HashMap<UserID, User> placeholderUserMap;
-    private CsvSearch csvSearch = new CsvSearch();
+    private CsvSearch csvSearch;
 
-    public UserCredentialsServer() throws IOException {
-        //csvSearch.checkForUser()
-        placeholderUserMap = new HashMap<UserID, User>();
-
-        while(!CsvSearch.end){
-
-              userString =csvSearch.sendUser();
-                //System.out.println(userString[1]);
-             if("client".equals(userString[1])){
-
-                tempClient = new Client(new UserID(userString[0]), userString[2]);
-                tempClient.setName(userString[3]);
-                tempClient.setAddress(userString[4]);
-                tempClient.setNumber(userString[5]);
-                placeholderUserMap.put(tempClient.getUserID(),tempClient);
-            }
-            if("contractor".equals(userString[1])){
-
-                tempContractor = new Contractor(new UserID(userString[0]), userString[2]);
-                tempContractor.setBusinessName(userString[6]);
-                tempContractor.setName(userString[3]);
-                tempContractor.setNumber(userString[5]);
-                tempContractor.setRating(userString[7]);
-                tempContractor.setSubUserType(userString[8]);
-                placeholderUserMap.put(tempContractor.getUserID(),tempContractor);
-            }
-        }/*
-        placeholderClient1 = new Client(new UserID("client"), "pass");
-        placeholderClient2 = new Client(new UserID("Brigham"), "pass");
-        placeholderClient3 = new Client(new UserID("Amon"), "pass");
-        placeholderContractor1 = new Contractor(new UserID("contractor"), "pass");
-        placeholderContractor2 = new Contractor(new UserID("Uchechi"), "pass");
-        placeholderContractor3 = new Contractor(new UserID("bossMan123"), "pass");
-
-        placeholderUserMap = new HashMap<UserID, User>();
-        placeholderUserMap.put(placeholderClient1.getUserID(), placeholderClient1);
-        placeholderUserMap.put(placeholderClient2.getUserID(), placeholderClient2);
-        placeholderUserMap.put(placeholderClient3.getUserID(), placeholderClient3);
-        placeholderUserMap.put(placeholderContractor1.getUserID(), placeholderContractor1);
-        placeholderUserMap.put(placeholderContractor2.getUserID(), placeholderContractor2);
-        placeholderUserMap.put(placeholderContractor3.getUserID(), placeholderContractor3);
-        */
+    public UserCredentialsServer() {
+        try {
+            csvSearch = new CsvSearch();
+            placeholderUserMap = new HashMap<UserID, User>();
+            csvSearch.parseUsers(placeholderUserMap);
+        }
+        catch (IOException e) {
+            System.out.println("General I/O exception: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @Override

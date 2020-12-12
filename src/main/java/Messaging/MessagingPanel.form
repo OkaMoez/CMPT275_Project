@@ -40,16 +40,21 @@
               <text value="Send"/>
             </properties>
           </component>
-          <component id="55f7c" class="javax.swing.JTextPane" binding="messagePane">
+          <scrollpane id="4735a">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-              </grid>
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <editable value="false"/>
-            </properties>
-          </component>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="e2fd0" class="javax.swing.JTextPane" binding="messagePane">
+                <constraints/>
+                <properties>
+                  <editable value="false"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </grid>
       <grid id="58e5c" binding="contactPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

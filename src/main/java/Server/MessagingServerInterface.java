@@ -8,6 +8,6 @@ import java.util.Vector;
 
 public interface MessagingServerInterface {
     Vector<ConversationID> getConversationList(UserID currentUser);
-    Vector<String> getConversationHistory(ConversationID conversationID);
+    Vector<ChatMessage> getConversationHistory(ConversationID conversationID);
     void sendMessage(ConversationID conversationID, ChatMessage message);
 }

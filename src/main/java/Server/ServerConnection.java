@@ -5,14 +5,13 @@ import Messaging.ConversationID;
 import Users.User;
 import Users.UserID;
 
-import java.io.IOException;
 import java.util.Vector;
 
 public class ServerConnection implements UserCredentialServerInterface, MessagingServerInterface {
     private UserCredentialsServer userCredentialsServer;
     private MessagingServer messagingServer;
 
-    public ServerConnection() throws IOException {
+    public ServerConnection() {
         userCredentialsServer = new UserCredentialsServer();
         messagingServer = new MessagingServer();
     }
@@ -23,7 +22,7 @@ public class ServerConnection implements UserCredentialServerInterface, Messagin
     }
 
     @Override
-    public Vector<String> getConversationHistory(ConversationID conversationID) {
+    public Vector<ChatMessage> getConversationHistory(ConversationID conversationID) {
         return messagingServer.getConversationHistory(conversationID);
     }
 

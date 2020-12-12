@@ -1,10 +1,7 @@
 package ProfilePages.Customer;
 
 import Server.UserCredentialsServer;
-import Users.Client;
-import Users.CsvSearch;
-import Users.User;
-import Users.UserID;
+import Users.Csv.CsvSearch;
 import com.opencsv.exceptions.CsvException;
 
 import javax.swing.*;

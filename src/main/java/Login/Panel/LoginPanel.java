@@ -7,7 +7,7 @@ import Server.UserCredentialServerInterface;
 import Server.UserCredentialsServer;
 import Users.Client;
 import Users.Contractor;
-import Users.CsvSearch;
+import Users.Csv.CsvSearch;
 import Users.UserID;
 
 import javax.swing.*;
@@ -58,13 +58,22 @@ public class LoginPanel extends JPanel{
     private String signUpName;
     private String signUpPassword;
     private String[] signUpUser= new String[9];
-    private CsvSearch csvSearch = new CsvSearch();
+    private CsvSearch csvSearch;
     private Client tempClient;
     private Contractor tempContractor;
 
     UserCredentialServerInterface loginServer;
 
-    public LoginPanel(final MainWindow mainWindow) throws IOException {
+    public LoginPanel(final MainWindow mainWindow) {
+
+        try {
+            csvSearch = new CsvSearch();
+        }
+        catch (IOException e) {
+            System.out.println("General I/O exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+
         loginServer = mainWindow.getServerConnection();
 
         add(loginPanel);

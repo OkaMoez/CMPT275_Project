@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterIOException;
 import java.io.IOException;
 
 public class MainWindow extends JFrame {
@@ -62,7 +63,7 @@ public class MainWindow extends JFrame {
 
 
 
-    public MainWindow(String title) throws IOException {
+    public MainWindow(String title) {
         super(title);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -205,7 +206,7 @@ public class MainWindow extends JFrame {
         this.getRootPane().setDefaultButton(button);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         JFrame frame = new MainWindow("CMPT 275 Project PoC - Group 20");
         frame.setVisible(true);
 
