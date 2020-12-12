@@ -47,5 +47,21 @@ public class HourMinute {
     }
 
     // TODO add comparator stuff
+    public boolean fallsWithin(HourMinute startTime, HourMinute endTime) {
+        if (this.mHour > startTime.mHour && this.mHour < endTime.mHour) {
+            return true;
+        }
+        else if (this.mHour == startTime.mHour) {
+            if (this.mMinute >= startTime.mMinute) {
+                return true;
+            }
+        }
+        else if (this.mHour == endTime.mHour) {
+            if (this.mMinute <= endTime.mMinute) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

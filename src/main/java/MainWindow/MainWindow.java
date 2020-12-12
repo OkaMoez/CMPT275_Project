@@ -27,8 +27,6 @@ public class MainWindow extends JFrame {
     static boolean IsContractor = true;
     private User currentUser;
 
-    // (Uchechi) login session timer attribute to be implemented
-
     // Main panel and settings
     private JPanel mainPanel;
     private Dimension mainPanelMinSize = new Dimension(800, 500);
@@ -55,10 +53,8 @@ public class MainWindow extends JFrame {
     private JPanel contentPanel;
     private LoginPanel loginPanel = new LoginPanel(this);
     private MessagingPanel messagingPanel = new MessagingPanel(this);
-    private SchedulePanel schedulePanel = new SchedulePanel();
+    private SchedulePanel schedulePanel = new SchedulePanel(this);
     private BrowsePanel browsePanel = new BrowsePanel(this);
-
-
 
     public MainWindow(String title) {
         super(title);
@@ -67,6 +63,8 @@ public class MainWindow extends JFrame {
         this.setMinimumSize(mainPanelMinSize);
         this.setContentPane(mainPanel);
         this.pack();
+
+        clientOrContractor = new String();
 
         // Populate the content panel with all the different panels we plan on using
         // Using a cardLayout we can then switch between them easily
@@ -163,6 +161,8 @@ public class MainWindow extends JFrame {
             ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.BROWSE.toString());
         }
 
+        schedulePanel = new SchedulePanel(this);
+
         // Output user name and user type to console just to confirm who is logged in
         //System.out.println(currentUser.getUserID().toString() + " is logged in as a " + currentUser.getUserType());
     }
@@ -192,6 +192,10 @@ public class MainWindow extends JFrame {
     public User getCurrentUser() {
         return this.currentUser;
     }
+
+    public String getUsername() { return this.username; }
+
+    public String getClientOrContractor() { return this.clientOrContractor; }
 
     public ServerConnection getServerConnection() {
         return serverConnection;
