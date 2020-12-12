@@ -4,12 +4,16 @@ import MainWindow.MainWindow;
 import Server.UserCredentialsServer;
 import Users.Contractor;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class ContractorProfile extends JPanel {
     private JPanel contractorProfile;
-    private JPanel ProfilePicture;
+    private JPanel ProfilePicture = new JPanel();
     private JPanel Info;
     private JButton Book;
     private JTextField EnterRating;
@@ -19,15 +23,20 @@ public class ContractorProfile extends JPanel {
     private JLabel Rating;
     private JPanel Portfolio;
     private JLabel ProfileHeader;
-    private JLabel temp;
-    private JLabel temp2;
     private JPanel ProfilePage;
     private JLabel Number;
     private JLabel subUserType;
 
 
-    public ContractorProfile() {
+    public ContractorProfile() throws IOException {
 
+        BufferedImage myPicture = ImageIO.read(new File("src/main/resources/profile.JPG"));
+
+        Image scaledInstance = myPicture.getScaledInstance(150,150,Image.SCALE_DEFAULT);
+        JLabel picLabel = new JLabel(new ImageIcon(scaledInstance));
+
+        ProfilePicture.setLayout(new CardLayout());
+        ProfilePicture.add(picLabel);
 
         this.EnterRating.setVisible(false);
         this.Book.setVisible(false);
@@ -39,10 +48,19 @@ public class ContractorProfile extends JPanel {
         Rating.setText("Rating: "+UserCredentialsServer.currentUser.getRating());
 
         this.setLayout(new CardLayout());
+
         this.add(contractorProfile, "contractorProfile");
     }
 
-    public ContractorProfile(Contractor contractor){
+    public ContractorProfile(Contractor contractor) throws IOException {
+        BufferedImage myPicture = ImageIO.read(new File("src/main/java/ProfilePages/profile.JPG"));
+
+        Image scaledInstance = myPicture.getScaledInstance(150,150,Image.SCALE_DEFAULT);
+        JLabel picLabel = new JLabel(new ImageIcon(scaledInstance));
+
+        ProfilePicture.setLayout(new CardLayout());
+        ProfilePicture.add(picLabel);
+
         this.EnterRating.setVisible(true);
         this.Book.setVisible(true);
         this.RateButton.setVisible(true);

@@ -3,10 +3,14 @@ package ProfilePages.Customer;
 import MainWindow.MainWindow;
 import Server.UserCredentialsServer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class CustomerProfile extends JPanel{
 
@@ -22,13 +26,18 @@ public class CustomerProfile extends JPanel{
     private JPanel Content;
     private JPanel BlankSpace;
     private JLabel ProfileHeader;
-    private JLabel temp;
     private JPanel profilePage;
     private JLabel Number;
     private JButton backButton;
-    public CustomerProfile(){
+    public CustomerProfile() throws IOException {
 
-        //I set the box to enter
+        BufferedImage myPicture = ImageIO.read(new File("src/main/resources/profile.JPG"));
+
+        Image scaledInstance = myPicture.getScaledInstance(150,150,Image.SCALE_DEFAULT);
+        JLabel picLabel = new JLabel(new ImageIcon(scaledInstance));
+
+        ProfilePicture.setLayout(new CardLayout());
+        ProfilePicture.add(picLabel);
 
 
         this.Contact.setVisible(false);
