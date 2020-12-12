@@ -29,9 +29,18 @@ public class ContractorProfileEdit extends JPanel{
     private String newNumber;
     private String[] updatedUser = new String[9];
 
-    CsvSearch csvSearch = new CsvSearch();
+    CsvSearch csvSearch;
 
-    public ContractorProfileEdit() throws IOException {
+    public ContractorProfileEdit() {
+        try {
+            csvSearch = new CsvSearch();
+        }
+        catch (IOException e) {
+                System.out.println("General I/O exception: " + e.getMessage());
+                e.printStackTrace();
+                assert(true);
+        }
+
         editWarningLabel.setText("");
 
         //this.setLayout(new GridLayout());

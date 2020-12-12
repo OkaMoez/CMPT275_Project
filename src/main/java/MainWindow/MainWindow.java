@@ -3,8 +3,8 @@ package MainWindow;
 import Booking.SchedulePanel;
 import Browse.BrowsePanel;
 import Login.Panel.LoginPanel;
-import ProfilePages.Customer.CustomerProfileContainer;
-import ProfilePages.Contractor.ContractorProfileContainer;
+import ProfilePages.Customer.CustomerProfileContainerPanel;
+import ProfilePages.Contractor.ContractorProfileContainerPanel;
 import Messaging.MessagingPanel;
 import Server.ServerConnection;
 
@@ -15,8 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.print.PrinterIOException;
-import java.io.IOException;
 
 public class MainWindow extends JFrame {
     // References to databases/servers
@@ -43,7 +41,6 @@ public class MainWindow extends JFrame {
     private JButton calendarButton;
     private JButton logoutButton;
     private JButton profileButton;
-    //static public boolean myProfile = false;
 
     // Content panel, children, and settings
     enum LocalPanelNames {
@@ -59,7 +56,7 @@ public class MainWindow extends JFrame {
     private LoginPanel loginPanel = new LoginPanel(this);
     private MessagingPanel messagingPanel = new MessagingPanel(this);
     private SchedulePanel schedulePanel = new SchedulePanel();
-    private BrowsePanel browsePanel = new BrowsePanel();
+    private BrowsePanel browsePanel = new BrowsePanel(this);
 
 
 
@@ -99,9 +96,7 @@ public class MainWindow extends JFrame {
         });
         messagingButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                messagingPanel.pageSelected();
-                setEnterKeyAction(messagingPanel.getDefaultButton());
-                ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.MESSAGING.toString());
+                changePageToMessaging();
             }
         });
         transactionHistoryButton.addActionListener(new ActionListener() {
@@ -121,23 +116,14 @@ public class MainWindow extends JFrame {
                 if(clientOrContractor.equals("client")) {
                     //customerProfile.myprofile(); //called because we clicked "my profile"
 
-                    CustomerProfileContainer customerProfileContainer = null;
-                    try {
-                        customerProfileContainer = new CustomerProfileContainer();
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
+                    CustomerProfileContainerPanel customerProfileContainer = null;
+                    customerProfileContainer = new CustomerProfileContainerPanel(MainWindow.this);
                     contentPanel.add(customerProfileContainer, LocalPanelNames.PROFILE_CLIENT.toString());
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, LocalPanelNames.PROFILE_CLIENT.toString());
                 }
                 else{
                     //contractorProfile.myprofile(); //called because we clicked "my profile"
-                    ContractorProfileContainer contractorProfileContainer = null;
-                    try {
-                        contractorProfileContainer = new ContractorProfileContainer();
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
+                    ContractorProfileContainerPanel contractorProfileContainer = new ContractorProfileContainerPanel(MainWindow.this);
                     contentPanel.add(contractorProfileContainer, LocalPanelNames.PROFILE_CONTRACTOR.toString());
                     ((CardLayout) contentPanel.getLayout()).show(contentPanel, LocalPanelNames.PROFILE_CONTRACTOR.toString());
                 }
@@ -149,7 +135,6 @@ public class MainWindow extends JFrame {
                 setEnterKeyAction(null);
                 // end login session and destruct current user
                 currentUser = null;
-                browsePanel = null;
                 navigationPanel.setVisible(false);
                 loginPanel.setblank();
                 ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.LOGIN.toString());
@@ -164,7 +149,6 @@ public class MainWindow extends JFrame {
         username = loginPanel.getUsername();
         password = loginPanel.getPassword();
         clientOrContractor = userType;
-        browsePanel = new BrowsePanel();
         navigationPanel.setVisible(true);
         if(userType.equals("contractor"))
         {
@@ -181,6 +165,18 @@ public class MainWindow extends JFrame {
 
         // Output user name and user type to console just to confirm who is logged in
         //System.out.println(currentUser.getUserID().toString() + " is logged in as a " + currentUser.getUserType());
+    }
+
+    public void changePageToMessaging(){
+        messagingPanel.pageSelected();
+        setEnterKeyAction(messagingPanel.getDefaultButton());
+        ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.MESSAGING.toString());
+    }
+
+    public void changePageToMessaging(UserID chatRecipient){
+        messagingPanel.pageSelected(chatRecipient);
+        setEnterKeyAction(messagingPanel.getDefaultButton());
+        ((CardLayout)contentPanel.getLayout()).show(contentPanel, LocalPanelNames.MESSAGING.toString());
     }
 
     // Successful Sign Up (does same thing as login)

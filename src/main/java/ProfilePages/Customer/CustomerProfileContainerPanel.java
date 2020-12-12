@@ -1,25 +1,41 @@
 package ProfilePages.Customer;
 
 import MainWindow.MainWindow;
+import Users.Csv.CsvSearch;
+import Users.User;
+import Users.UserID;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashMap;
 
-public class CustomerProfileContainer extends JPanel{
+public class CustomerProfileContainerPanel extends JPanel{
+    private MainWindow mainWindow;
     private JPanel customerContainer;
     private JPanel content;
     private JButton editButton;
     private JButton backButton;
-    CardLayout cardLayout = new CardLayout();
+    CardLayout cardLayout;
 
-    private CustomerProfile customerProfile = new CustomerProfile();
+    private CustomerProfile customerProfile;
 
     private CustomerProfileEdit customerProfileEdit = new CustomerProfileEdit();
 
-    public  CustomerProfileContainer() throws IOException {
+    public CustomerProfileContainerPanel(MainWindow mainWindow) {
+        try {
+            customerProfile = new CustomerProfile();
+        }
+        catch (IOException e) {
+            System.out.println("General I/O exception: " + e.getMessage());
+            e.printStackTrace();
+            assert(true);
+        }
+
+        this.mainWindow = mainWindow;
+        cardLayout = new CardLayout();
         content.setLayout(cardLayout);
 
         add(customerContainer);

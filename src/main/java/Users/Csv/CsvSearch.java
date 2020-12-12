@@ -11,7 +11,6 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
@@ -124,12 +123,16 @@ public class CsvSearch implements CsvMessagingInterface {
     // Each conversation has its own file
     // Conversation files have 1 message per line
     // Format: sender name,time stamp,message
-    private String getUserMessageIndexLocation(UserID currentUser){
+    private String getOwnerMessageIndexLocation(UserID currentUser){
         return messageIndexDirectoryLocation + "/" + currentUser.toString() + ".csv";
     }
 
-    private String getUserMessageIndexLocation(ConversationID conversationID){
-        return getUserMessageIndexLocation(conversationID.getOwner());
+    private String getOwnerMessageIndexLocation(ConversationID conversationID){
+        return getOwnerMessageIndexLocation(conversationID.getOwner());
+    }
+
+    private String getOtherUserMessageIndexLocation(ConversationID conversationID){
+        return getOwnerMessageIndexLocation(conversationID.getOtherUserID());
     }
 
     private String getConversationHistoryLocation(ConversationID conversationID){
@@ -142,7 +145,7 @@ public class CsvSearch implements CsvMessagingInterface {
     public Vector<ConversationID> getUsersConversations(UserID currentUser) throws IOException, CsvException {
         Vector<ConversationID> results = new Vector<ConversationID>();
 
-        File messageIndexFile = new File(getUserMessageIndexLocation(currentUser));
+        File messageIndexFile = new File(getOwnerMessageIndexLocation(currentUser));
         if (!messageIndexFile.exists()) {
             // If there is no file, assume there are no conversations
             return results;
@@ -162,7 +165,8 @@ public class CsvSearch implements CsvMessagingInterface {
 
     @Override
     public void createNewConversation(ConversationID newConversation) throws IOException, CsvException {
-        File messageIndexFile = new File(getUserMessageIndexLocation(newConversation));
+        // Owner
+        File messageIndexFile = new File(getOwnerMessageIndexLocation(newConversation));
         if (!messageIndexFile.exists()) {
             // If there is no file, make one
             messageIndexFile.getParentFile().mkdirs();
@@ -193,10 +197,45 @@ public class CsvSearch implements CsvMessagingInterface {
             csvWriter.writeAll(csvBody);
             csvWriter.flush();
             csvWriter.close();
-            removeLastLineOfFile(getUserMessageIndexLocation(newConversation));
+            removeLastLineOfFile(getOwnerMessageIndexLocation(newConversation));
 
             File conversationHistoryFile = new File(getConversationHistoryLocation(newConversation));
             conversationHistoryFile.createNewFile();
+        }
+
+        // Other
+        File messageIndexFile2 = new File(getOtherUserMessageIndexLocation(newConversation));
+        if (!messageIndexFile2.exists()) {
+            // If there is no file, make one
+            messageIndexFile2.getParentFile().mkdirs();
+            messageIndexFile2.createNewFile();
+        }
+
+        CSVReader csvReader2 = new CSVReader(new FileReader(messageIndexFile2));
+        List<String[]> csvBody2 = csvReader2.readAll();
+        csvReader2.close();
+
+        boolean foundUserID2 = false;
+        String ownerString2 = newConversation.getOwner().toString();
+        for(int i=0; i<csvBody2.size(); i++){
+            String[] strArray2 = csvBody2.get(i);
+            if(strArray2[0].equalsIgnoreCase(ownerString2)){
+                // We shouldn't be calling this if we know there is an existing conversation
+                assert(true);
+                foundUserID2 = true;
+                break;
+            }
+        }
+        if (!foundUserID2) {
+            String[] newRecipient2 = { ownerString2 };
+            csvBody2.add(newRecipient2);
+
+            CSVWriter csvWriter2 = new CSVWriter(new FileWriter(messageIndexFile2), ',',
+                    CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.NO_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
+            csvWriter2.writeAll(csvBody2);
+            csvWriter2.flush();
+            csvWriter2.close();
+            removeLastLineOfFile(getOtherUserMessageIndexLocation(newConversation));
         }
 
         return;
@@ -218,6 +257,9 @@ public class CsvSearch implements CsvMessagingInterface {
 
         for(int i=0; i<csvBody.size(); i++){
             String[] strArray = csvBody.get(i);
+            if (strArray[0].isEmpty()) {
+                continue;
+            }
             results.add(new ChatMessage(strArray[0], strArray[1], strArray[2]));
         }
 
@@ -239,6 +281,9 @@ public class CsvSearch implements CsvMessagingInterface {
             bufferedWriter.append(messageData[i]);
             if (i<2) {
                 bufferedWriter.append(",");
+            }
+            else {
+                bufferedWriter.append("\n");
             }
         }
         bufferedWriter.close();

@@ -32,6 +32,11 @@ public class ServerConnection implements UserCredentialServerInterface, Messagin
     }
 
     @Override
+    public void createNewConversation(ConversationID newConversation) {
+        messagingServer.createNewConversation(newConversation);
+    }
+
+    @Override
     public LoginResult tryLoginCredentials(UserID userID, String password) {
         return userCredentialsServer.tryLoginCredentials(userID, password);
     }
@@ -44,6 +49,11 @@ public class ServerConnection implements UserCredentialServerInterface, Messagin
     @Override
     public User createNewAccount() {
         return userCredentialsServer.createNewAccount();
+    }
+
+    @Override
+    public String getNameFromID(UserID userID) {
+        return userCredentialsServer.getNameFromID(userID);
     }
 
     @Override

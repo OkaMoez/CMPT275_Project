@@ -75,6 +75,24 @@ public class UserCredentialsServer implements UserCredentialServerInterface {
     }
 
     @Override
+    public String getNameFromID(UserID userID) {
+        String result = new String();
+        User user = placeholderUserMap.get(userID);
+        if (user != null) {
+            if (user.getUserType().equals("client")) {
+                Client client = (Client)user;
+                result = client.getName();
+            }
+            else {
+                Contractor contractor = (Contractor)user;
+                result = "[" + contractor.getBusinessName() + "] " + contractor.getName();
+
+            }
+        }
+        return result;
+    }
+
+    @Override
     public boolean isFieldUnique(UniqueUserInfoField field, String name) {
         return false;
     }

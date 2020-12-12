@@ -18,6 +18,7 @@ public interface UserCredentialServerInterface {
         USERNAME,
         BUSINESS_NAME
     }
+    String getNameFromID(UserID userID);
     boolean isFieldUnique(UniqueUserInfoField field, String name);
     boolean isContractor();
     boolean updateClientName();

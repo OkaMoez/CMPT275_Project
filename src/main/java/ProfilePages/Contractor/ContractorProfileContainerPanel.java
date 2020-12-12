@@ -1,24 +1,30 @@
 package ProfilePages.Contractor;
 
+import Browse.BrowsePanel;
+import MainWindow.MainWindow;
 import Users.Contractor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
-public class ContractorProfileContainer extends JPanel {
+public class ContractorProfileContainerPanel extends JPanel {
+    private MainWindow mainWindow;
     private JPanel contractorContainer;
     private JButton editButton;
     private JButton backButton;
     private JPanel content;
     CardLayout cardLayout = new CardLayout();
 
+    private BrowsePanel browsePanel;
+
     private ContractorProfileEdit contractorProfileEdit = new ContractorProfileEdit();
 
-    public ContractorProfileContainer() throws IOException {
-        ContractorProfile contractorProfile = new ContractorProfile();
+    public ContractorProfileContainerPanel(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
+
+        ContractorProfile contractorProfile = new ContractorProfile(mainWindow);
         content.setLayout(cardLayout);
 
         add(contractorContainer);
@@ -47,8 +53,12 @@ public class ContractorProfileContainer extends JPanel {
             }
         });
     }
-    public ContractorProfileContainer(Contractor contractor) throws IOException {
-        ContractorProfile contractorProfile = new ContractorProfile(contractor);
+
+    public ContractorProfileContainerPanel(BrowsePanel browsePanel, Contractor contractor) {
+        this.browsePanel = browsePanel;
+        this.mainWindow = browsePanel.getMainWindowObj();
+
+        ContractorProfile contractorProfile = new ContractorProfile(mainWindow, contractor);
         content.setLayout(cardLayout);
 
         add(contractorContainer);
@@ -70,5 +80,5 @@ public class ContractorProfileContainer extends JPanel {
         });
     }
 
-    public JButton getBackButton() {return backButton;}
+    public JButton getBackButton() { return backButton; }
 }

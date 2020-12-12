@@ -1,6 +1,7 @@
 package Browse;
 
-import ProfilePages.Contractor.ContractorProfileContainer;
+import MainWindow.MainWindow;
+import ProfilePages.Contractor.ContractorProfileContainerPanel;
 import Users.Contractor;
 import Users.User;
 import Users.UserID;
@@ -11,9 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
@@ -31,7 +29,7 @@ public class BrowseSearchPanel extends JPanel{
     private JLabel sortByLabel;
     private JTable searchResultsTable;
     private JButton resetSearchButton;
-    private ContractorProfileContainer selectedContractorProfile;
+    private ContractorProfileContainerPanel selectedContractorProfile;
 
     private Vector<User> contractorList;
     private Vector<User> contractorSearchResults = new Vector<User> ();
@@ -97,21 +95,14 @@ public class BrowseSearchPanel extends JPanel{
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 int row = searchResultsTable.rowAtPoint(e.getPoint());
-
-                try {
-                    selectedContractorProfile = new ContractorProfileContainer((Contractor)contractorSearchResults.get(row));
-                    selectedContractorProfile.getBackButton().addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            browsePanel.backToSearch();
-                        }
-                    });
-                    browsePanel.showSelectedProfile(selectedContractorProfile);
-                }
-                catch (IOException ex) {
-                    ex.printStackTrace();
-                    System.out.println("IO Exception caught when making new contractor profile panel");
-                }
+                selectedContractorProfile = new ContractorProfileContainerPanel(browsePanel, (Contractor)contractorSearchResults.get(row));
+                selectedContractorProfile.getBackButton().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        browsePanel.backToSearch();
+                    }
+                });
+                browsePanel.showSelectedProfile(selectedContractorProfile);
             }
         });
     }

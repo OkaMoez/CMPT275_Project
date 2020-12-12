@@ -27,9 +27,18 @@ public class CustomerProfileEdit extends JPanel{
     private String newNumber;
     private String[] updatedUser = new String[9];
 
-    CsvSearch csvSearch = new CsvSearch();
+    CsvSearch csvSearch;
 
-    public CustomerProfileEdit() throws IOException {
+    public CustomerProfileEdit() {
+        try {
+            csvSearch = new CsvSearch();
+        }
+        catch (IOException e) {
+            System.out.println("General I/O exception: " + e.getMessage());
+            e.printStackTrace();
+            assert(true);
+        }
+
         editWarningLabel.setText("");
         this.setLayout(new CardLayout());
         this.add(customerProfileEdit, "customerProfileEdit");

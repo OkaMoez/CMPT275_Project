@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ContractorProfile extends JPanel {
     private JPanel contractorProfile;
@@ -26,21 +28,30 @@ public class ContractorProfile extends JPanel {
     private JPanel ProfilePage;
     private JLabel Number;
     private JLabel subUserType;
+    private JButton messagingLinkButton;
+    MainWindow mainWindow;
 
+    public ContractorProfile(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
 
-    public ContractorProfile() throws IOException {
-
-        BufferedImage myPicture = ImageIO.read(new File("src/main/resources/profile.JPG"));
-
-        Image scaledInstance = myPicture.getScaledInstance(150,150,Image.SCALE_DEFAULT);
-        JLabel picLabel = new JLabel(new ImageIcon(scaledInstance));
-
-        ProfilePicture.setLayout(new CardLayout());
-        ProfilePicture.add(picLabel);
+        try {
+            BufferedImage myPicture = ImageIO.read(new File("src/main/java/ProfilePages/profile.JPG"));
+            Image scaledInstance = myPicture.getScaledInstance(150,150,Image.SCALE_DEFAULT);
+            JLabel picLabel = new JLabel(new ImageIcon(scaledInstance));
+            ProfilePicture.setLayout(new CardLayout());
+            ProfilePicture.add(picLabel);
+        }
+        catch (IOException e) {
+            System.out.println("General I/O exception: " + e.getMessage());
+            e.printStackTrace();
+            assert(true);
+        }
 
         this.EnterRating.setVisible(false);
         this.Book.setVisible(false);
         this.RateButton.setVisible(false);
+        this.messagingLinkButton.setVisible(false);
+
         BusinessName.setText("Business Name: " + UserCredentialsServer.currentUser.getBusinessName());
         ContactName.setText("Contact Person: " + UserCredentialsServer.currentUser.getName());
         Number.setText("Number: " + UserCredentialsServer.currentUser.getNumber());
@@ -52,18 +63,27 @@ public class ContractorProfile extends JPanel {
         this.add(contractorProfile, "contractorProfile");
     }
 
-    public ContractorProfile(Contractor contractor) throws IOException {
-        BufferedImage myPicture = ImageIO.read(new File("src/main/java/ProfilePages/profile.JPG"));
+    public ContractorProfile(MainWindow mainWindow, Contractor contractor) {
+        this.mainWindow = mainWindow;
 
-        Image scaledInstance = myPicture.getScaledInstance(150,150,Image.SCALE_DEFAULT);
-        JLabel picLabel = new JLabel(new ImageIcon(scaledInstance));
+        try {
+            BufferedImage myPicture = ImageIO.read(new File("src/main/resources/profile.JPG"));
+            Image scaledInstance = myPicture.getScaledInstance(150,150,Image.SCALE_DEFAULT);
+            JLabel picLabel = new JLabel(new ImageIcon(scaledInstance));
+            ProfilePicture.setLayout(new CardLayout());
+            ProfilePicture.add(picLabel);
+        }
+        catch (IOException e) {
+            System.out.println("General I/O exception: " + e.getMessage());
+            e.printStackTrace();
+            assert(true);
+        }
 
-        ProfilePicture.setLayout(new CardLayout());
-        ProfilePicture.add(picLabel);
 
         this.EnterRating.setVisible(true);
         this.Book.setVisible(true);
         this.RateButton.setVisible(true);
+        this.messagingLinkButton.setVisible(true);
 
         BusinessName.setText("Business Name: " + contractor.getBusinessName());
         ContactName.setText("Contact Person: " + contractor.getName());
@@ -74,6 +94,13 @@ public class ContractorProfile extends JPanel {
         this.setLayout(new CardLayout());
         this.add(contractorProfile, "contractorProfile");
 
+        messagingLinkButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainWindow.changePageToMessaging(contractor.getUserID());
+                return;
+            }
+        });
     }
 
     public void updateVales(){

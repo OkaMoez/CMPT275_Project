@@ -1,18 +1,22 @@
 package Browse;
 
-import ProfilePages.Contractor.ContractorProfileContainer;
+import MainWindow.MainWindow;
+import ProfilePages.Contractor.ContractorProfileContainerPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class BrowsePanel extends JPanel{
+    // Owner window
+    MainWindow mainWindow;
+
     private JPanel mainPanel;
     private JPanel searchOrProfilePanel;
     private JButton backToSearchButton;
     private BrowseSearchPanel browseSearchPanel = new BrowseSearchPanel(this);
-    private ContractorProfileContainer browseProfilePanel;
 
-    public BrowsePanel () {
+    public BrowsePanel (MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
         add(mainPanel);
         backToSearchButton.setVisible(false);
 
@@ -22,8 +26,12 @@ public class BrowsePanel extends JPanel{
 
     public void backToSearch() {((CardLayout)searchOrProfilePanel.getLayout()).show(searchOrProfilePanel, "search");}
 
-    public void showSelectedProfile(ContractorProfileContainer selectedContractorProfile) {
+    public void showSelectedProfile(ContractorProfileContainerPanel selectedContractorProfile) {
         searchOrProfilePanel.add(selectedContractorProfile, "profile");
         ((CardLayout)searchOrProfilePanel.getLayout()).show(searchOrProfilePanel, "profile");
+    }
+
+    public MainWindow getMainWindowObj() {
+        return mainWindow;
     }
 }

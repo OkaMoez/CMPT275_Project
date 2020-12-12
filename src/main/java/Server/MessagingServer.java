@@ -70,4 +70,15 @@ public class MessagingServer implements MessagingServerInterface {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void createNewConversation(ConversationID newConversation) {
+        try {
+            csvMessageInterface.createNewConversation(newConversation);
+        }
+        catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
