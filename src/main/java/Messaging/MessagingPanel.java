@@ -98,23 +98,12 @@ public class MessagingPanel extends JPanel {
 
     public void pageSelected() {
         DefaultListModel model = (DefaultListModel) contactList.getModel();
-        if (model.isEmpty()) {
-            // Lock contact selection listener while loading contacts
-            contactsLoaded = false;
-
-            model.removeAllElements();
-            serverConnection.getConversationList(mainWindow.getCurrentUser().getUserID()).forEach((conversationID) -> addContactToList(contactListModel, conversationID));
-
-            // Unlock when done
-            contactsLoaded = true;
-        }
+        reloadContacts(model);
     }
 
     public void pageSelected(UserID chatRecipient) {
         DefaultListModel model = (DefaultListModel) contactList.getModel();
-        if (model.isEmpty()) {
-            reloadContacts(model);
-        }
+        reloadContacts(model);
 
         ConversationID incomingConversation = new ConversationID(mainWindow.getCurrentUser().getUserID(), chatRecipient);
         int index = model.indexOf(incomingConversation);
