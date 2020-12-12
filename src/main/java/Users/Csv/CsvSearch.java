@@ -17,10 +17,21 @@ import java.util.Vector;
 
 public class CsvSearch implements CsvMessagingInterface {
     // File locations
+
+    // /*
     private static final String userFileLocation = "src/main/resources/data/users.csv";
     private static final String messageIndexDirectoryLocation = "src/main/resources/data/messages/index";
     private static final String messageDirectoryLocation = "src/main/resources/data/messages";
+    // */
 
+    //Use following file paths for generating JAR file.
+    //Remember to also make 2 changes to file path in "ContractorProfile" and
+    // 1 change to file path in "CustomerProfile"
+    /*
+    private static final String userFileLocation = "resources/data/users.csv";
+    private static final String messageIndexDirectoryLocation = "resources/data/messages/index";
+    private static final String messageDirectoryLocation = "resources/data/messages";
+    */
     public CsvSearch() throws IOException {}
 
     public void parseUsers(HashMap<UserID, User> userHashMap) throws IOException {
